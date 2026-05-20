@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <!-- TopAppBar -->
+    <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <button onclick="history.back()"
+            class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+        </button>
+        <div class="flex items-center gap-4">
+
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+        <button onclick="window.location.reload()"
+            class="flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+
+    <main class="flex-grow flex flex-col px-margin-mobile pt-8 pb-16 max-w-md mx-auto w-full">
+        <!-- Step Progress Bar -->
+        <div class="flex items-center gap-2 mb-8">
+            <div class="flex-1 h-2 bg-primary rounded-full"></div>
+            <div class="flex-1 h-2 bg-primary rounded-full"></div>
+            <div class="flex-1 h-2 bg-primary rounded-full"></div>
+        </div>
+        <!-- Success Animation/Icon Area -->
+        <div class="flex flex-col items-center text-center mb-10">
+            <div class="w-24 h-24 bg-primary-fixed rounded-full flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-[64px] text-primary" data-icon="check_circle"
+                    data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+            <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2 px-4">Sensor Configurado com
+                Sucesso!</h2>
+            <p class="font-body-md text-on-surface-variant px-6">O sensor já está coletando dados e sincronizando com
+                seu dashboard.</p>
+        </div>
+        <!-- Summary Bento Card -->
+        <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 mb-8 flex flex-col gap-6 shadow-sm">
+            <div class="flex items-center justify-between border-b border-outline-variant pb-4">
+                <span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Detalhes do
+                    Dispositivo</span>
+                <span
+                    class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm flex items-center gap-1">
+                    <span class="w-2 h-2 bg-on-primary-container rounded-full"></span>
+                    Ativo
+                </span>
+            </div>
+            <div class="grid grid-cols-2 gap-y-6">
+                <div>
+                    <p class="font-label-sm text-on-surface-variant mb-1">Nome</p>
+                    <p class="font-body-md font-semibold text-on-surface">Sensor Norte 01</p>
+                </div>
+                <div>
+                    <p class="font-label-sm text-on-surface-variant mb-1">Tipo</p>
+                    <p class="font-body-md font-semibold text-on-surface">Temperatura</p>
+                </div>
+                <div>
+                    <p class="font-label-sm text-on-surface-variant mb-1">ID Local</p>
+                    <p class="font-body-md text-on-surface">AG-4492-X</p>
+                </div>
+                <div>
+                    <p class="font-label-sm text-on-surface-variant mb-1">Último Sinal</p>
+                    <p class="font-body-md text-on-surface">Agora mesmo</p>
+                </div>
+            </div>
+        </div>
+        <!-- Action Buttons -->
+        <div class="flex flex-col gap-3 mt-auto">
+            <button onclick="window.location.href='Dashboard.html'"
+                class="w-full bg-primary text-on-primary font-label-md h-14 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                Ir para o Dashboard
+                <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+            </button>
+            <button onclick="window.location.href='NovoSensor1.html'"
+                class="w-full border-2 border-secondary text-secondary font-label-md h-14 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                <span class="material-symbols-outlined" data-icon="add">add</span>
+                Cadastrar Outro Sensor
+            </button>
+        </div>
+    </main>
+    <!-- BottomNavBar -->
+
+</body>
+
+</html>

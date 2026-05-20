@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html class="" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Histórico e Relatórios - AgroSync</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            background-color: #f9f9f6;
+            min-height: 100dvh;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .dual-range::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .dual-range::-moz-range-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen">
+    <!-- Mobile Side Drawer (Overlay) -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        <button
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+
+        <button onclick="window.location.reload()"
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- NavigationDrawer / Sidebar -->
+    <aside
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        id="main-sidebar">
+        <!-- Close Button (Mobile Only) -->
+        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- Profile Header -->
+        <div class="px-6 mb-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+                <img alt="Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+            </div>
+            <div class="overflow-hidden">
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <div class="flex items-center gap-1 mt-0.5">
+                    <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
+                    <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 my-2 border-t border-outline-variant"></div>
+        <nav class="flex-1 overflow-y-auto">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
+                    dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Culturas.html">
+                <span class="material-symbols-outlined">potted_plant</span>
+                <span class="font-label-md text-label-md">Culturas</span>
+            </a>
+            <a class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-lg px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+                href="Relatorios.html">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-label-md text-label-md">Relatórios</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Compartilhamento.html">
+                <span class="material-symbols-outlined">share</span>
+                <span class="font-label-md text-label-md">Compartilhar</span>
+            </a>
+            <div class="mx-4 my-2 border-t border-outline-variant"></div>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Perfil.html">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="font-label-md text-label-md">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Configurações.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Configurações</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BottomNavBar (Mobile) -->
+    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
+                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
+                class="font-label-sm text-[10px] mt-0.5">Dashboard
+            </span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Culturas.html">
+            <span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
+                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
+            class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
+            href="Relatorios.html">
+            <span class="material-symbols-outlined text-[24px] ">assessment</span><span
+                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Compartilhamento.html">
+            <span class="material-symbols-outlined text-[24px] ">share</span><span
+                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
+                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
+                class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="pt-[80px] pb-[90px] md:pb-8 md:pl-[280px] px-margin-mobile md:pr-margin-desktop min-h-screen">
+        <!-- Header -->
+        <div class="mb-6 md:mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1
+                    class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background mb-1">
+                    Histórico de Atividades</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Registro cronológico das operações no
+                    campo.</p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto mt-2 md:mt-0">
+                <button
+                    class="bg-surface border-2 border-outline-variant text-on-surface font-label-md text-label-md px-4 h-12 rounded-lg flex items-center justify-center gap-2 w-full sm:w-auto hover:bg-surface-container-low hover:border-primary active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-[20px]"
+                        style="font-variation-settings: 'FILL' 1;">download</span>
+                    Exportar Relatório
+                </button>
+                <button onclick="window.location.href = 'NovoRelatorio.html'"
+                    class="bg-primary-container text-white font-label-md text-label-md px-6 h-12 rounded-lg flex items-center justify-center gap-2 w-full sm:w-auto shadow-md hover:brightness-110 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                    Nova Operação
+                </button>
+            </div>
+        </div>
+        <!-- Filters (Bento Card) -->
+        <div
+            class="bg-surface border border-outline-variant rounded-xl p-4 mb-bento-gap flex flex-col md:flex-row gap-4 items-start md:items-center justify-between shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <span class="material-symbols-outlined text-outline">filter_list</span>
+                <span class="font-label-md text-label-md text-on-surface font-semibold hidden md:inline">Filtros:</span>
+                <!-- Quick filter chips -->
+                <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 hide-scrollbar">
+                    <button
+                        class="whitespace-nowrap bg-secondary-container text-on-secondary-container border border-transparent font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1">
+                        Todos
+                    </button>
+                    <button
+                        class="whitespace-nowrap bg-surface text-on-surface border border-outline-variant hover:bg-surface-container font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">forest</span> Plantio
+                    </button>
+                    <button
+                        class="whitespace-nowrap bg-surface text-on-surface border border-outline-variant hover:bg-surface-container font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">water_drop</span> Irrigação
+                    </button>
+                    <button
+                        class="whitespace-nowrap bg-surface text-on-surface border border-outline-variant hover:bg-surface-container font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">science</span> Adubação
+                    </button>
+                    <button
+                        class="whitespace-nowrap bg-surface text-on-surface border border-outline-variant hover:bg-surface-container font-label-sm text-label-sm px-3 py-1.5 rounded-full flex items-center gap-1 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">agriculture</span> Colheita
+                    </button>
+                </div>
+            </div>
+            <!-- Date Range -->
+            <div
+                class="flex items-center gap-2 w-full md:w-auto border-t md:border-t-0 border-outline-variant pt-3 md:pt-0">
+                <span class="material-symbols-outlined text-outline hidden md:inline">calendar_today</span>
+                <select
+                    class="bg-surface border border-outline-variant text-on-surface font-label-md text-label-md rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-secondary focus:border-secondary outline-none w-full md:w-auto appearance-none">
+                    <option>Últimos 7 dias</option>
+                    <option>Últimos 30 dias</option>
+                    <option>Este Mês</option>
+                    <option>Personalizado...</option>
+                </select>
+            </div>
+        </div>
+        <!-- Vertical Timeline Container -->
+        <div class="relative mt-8">
+            <!-- The Vertical Line -->
+            <div class="absolute left-[19px] top-6 bottom-4 w-[2px] bg-surface-variant z-0"></div>
+
+            <!-- Timeline Item 1 -->
+            <div class="relative pl-14 md:pl-16 mb-6 group">
+                <div
+                    class="absolute left-0 top-2 w-10 h-10 rounded-full bg-surface border-[3px] border-primary-container flex items-center justify-center z-10 shadow-sm transition-transform group-hover:scale-110">
+                    <span class="material-symbols-outlined text-primary-container text-[20px]"
+                        style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                </div>
+
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-all hover:border-primary-fixed">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="font-headline-md text-headline-md text-on-surface">Irrigação - Setor Sul</span>
+                            <span
+                                class="bg-primary-container text-white font-label-sm px-2.5 py-1 rounded-full tracking-wider">CONCLUÍDO</span>
+                        </div>
+                        <div
+                            class="font-label-sm text-on-surface-variant flex items-center gap-1.5 bg-surface-container py-1 px-3 rounded-full">
+                            <span class="material-symbols-outlined text-[16px]">schedule</span> Hoje, 08:30
+                        </div>
+                    </div>
+                    <p class="font-body-md text-on-surface-variant mb-4">Ciclo completo de 45 minutos. Volume estimado:
+                        15.000 Litros.</p>
+
+                    <div
+                        class="bg-surface-container-low rounded-lg p-3 md:p-4 flex flex-col md:flex-row gap-4 md:gap-8 border border-outline-variant">
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-outline mb-1">Operador</span>
+                            <span class="font-body-md text-on-surface font-medium flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-[18px] text-primary">smart_toy</span>Sistema
+                                Automático</span>
+                        </div>
+                        <div class="hidden md:block w-px bg-outline-variant"></div>
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-outline mb-1">Sensor de Umidade</span>
+                            <span class="font-body-md text-primary font-bold flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-[18px]">water_ec</span>Adequado (68%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="relative pl-14 md:pl-16 mb-6 group">
+                <div
+                    class="absolute left-0 top-2 w-10 h-10 rounded-full bg-surface border-[3px] border-tertiary-container flex items-center justify-center z-10 shadow-sm transition-transform group-hover:scale-110">
+                    <span class="material-symbols-outlined text-tertiary-container text-[20px]"
+                        style="font-variation-settings: 'FILL' 1;">science</span>
+                </div>
+
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-all hover:border-tertiary-fixed">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="font-headline-md text-headline-md text-on-surface">Adubação Foliar - Talhão
+                                2</span>
+                            <span
+                                class="bg-error-container text-on-error-container font-label-sm px-2.5 py-1 rounded-full tracking-wider">ATRASADO</span>
+                        </div>
+                        <div
+                            class="font-label-sm text-on-surface-variant flex items-center gap-1.5 bg-surface-container py-1 px-3 rounded-full">
+                            <span class="material-symbols-outlined text-[16px]">schedule</span> Ontem, 16:00
+                        </div>
+                    </div>
+                    <p class="font-body-md text-on-surface-variant mb-4">Aplicação de NPK 10-10-10. Condições de vento
+                        desfavoráveis atrasaram a operação.</p>
+
+                    <div
+                        class="bg-surface-container-low rounded-lg p-3 md:p-4 flex flex-col md:flex-row gap-4 md:gap-8 border border-outline-variant">
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-outline mb-1">Operador</span>
+                            <span class="font-body-md text-on-surface font-medium flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-[18px] text-tertiary">person</span>João
+                                Silva</span>
+                        </div>
+                        <div class="hidden md:block w-px bg-outline-variant"></div>
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-outline mb-1">Maquinário</span>
+                            <span class="font-body-md text-on-surface font-medium flex items-center gap-2"><span
+                                    class="material-symbols-outlined text-[18px] text-tertiary">agriculture</span>Trator
+                                TX-200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 3 -->
+            <div class="relative pl-14 md:pl-16 mb-6 group">
+                <div
+                    class="absolute left-0 top-2 w-10 h-10 rounded-full bg-surface border-[3px] border-secondary flex items-center justify-center z-10 shadow-sm transition-transform group-hover:scale-110">
+                    <span class="material-symbols-outlined text-secondary text-[20px]"
+                        style="font-variation-settings: 'FILL' 1;">forest</span>
+                </div>
+
+                <div
+                    class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-sm hover:shadow-md transition-all hover:border-secondary">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-3 gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="font-headline-md text-headline-md text-on-surface">Plantio Direto - Área
+                                Norte</span>
+                            <span
+                                class="bg-primary-container text-white font-label-sm px-2.5 py-1 rounded-full tracking-wider">CONCLUÍDO</span>
+                        </div>
+                        <div
+                            class="font-label-sm text-on-surface-variant flex items-center gap-1.5 bg-surface-container py-1 px-3 rounded-full">
+                            <span class="material-symbols-outlined text-[16px]">schedule</span> 12 Mai, 06:00
+                        </div>
+                    </div>
+                    <p class="font-body-md text-on-surface-variant mb-4">Plantio de milho híbrido. Densidade: 60.000
+                        sementes/ha.</p>
+
+                    <div
+                        class="bg-primary-container/10 rounded-lg p-3 md:p-4 flex gap-4 border border-primary-container/20">
+                        <div class="flex items-center gap-3 text-primary font-headline-md">
+                            <span
+                                class="material-symbols-outlined text-primary bg-primary-fixed p-1.5 rounded-full">done_all</span>
+                            Verificação de Qualidade Aprovada
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of timeline marker -->
+            <div class="relative pl-14 md:pl-16 mt-2 pb-4">
+                <div
+                    class="absolute left-[14px] top-1.5 w-3 h-3 rounded-full bg-surface-variant border-2 border-surface z-10">
+                </div>
+                <div class="font-label-sm text-outline italic">Fim dos registros para o período selecionado.</div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            if (sidebar.classList.contains('sidebar-closed')) {
+                sidebar.classList.remove('sidebar-closed');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                sidebar.classList.add('sidebar-closed');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+    </script>
+</body>
+
+</html>

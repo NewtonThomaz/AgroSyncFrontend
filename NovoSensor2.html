@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AgroSync - Sensor Configuration</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row">
+    <!-- TopAppBar (Transactional - Hidden Nav Shell, but kept for back button functionality) -->
+    <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <button onclick="history.back()"
+            class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+        </button>
+        <div class="flex items-center gap-4">
+
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+        <button onclick="window.location.reload()"
+            class="flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="flex-1 px-margin-mobile md:px-margin-desktop py-6 max-w-3xl mx-auto w-full">
+        <!-- Desktop Header -->
+        <div class="hidden md:flex items-center gap-4 mb-8">
+            <button
+                class="text-primary hover:bg-surface-container-low transition-colors active:scale-95 p-2 rounded-full flex items-center justify-center bg-surface-container-lowest border border-outline-variant">
+                <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+            </button>
+            <h1 class="font-headline-lg text-headline-lg text-primary">Configurar Sensor</h1>
+        </div>
+        <!-- Progress Indicator -->
+        <div class="flex items-center gap-2 mb-8">
+            <div class="flex-1 h-2 bg-primary rounded-full"></div>
+            <div class="flex-1 h-2 bg-primary rounded-full"></div>
+            <div class="flex-1 h-2 bg-surface-container-highest rounded-full"></div>
+        </div>
+        <!-- Configuration Form Bento Box -->
+        <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-6">
+            <div class="flex items-center gap-3 border-b border-outline-variant pb-4">
+                <span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg"
+                    data-icon="sensors">sensors</span>
+                <div>
+                    <h2 class="font-label-md text-label-md text-on-surface">Detalhes do Dispositivo</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-sm">Insira as informações para
+                        vincular o novo sensor.</p>
+                </div>
+            </div>
+            <form class="flex flex-col gap-5">
+                <!-- Sensor Name Input -->
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface" for="sensor-name">Nome do Sensor</label>
+                    <input
+                        class="w-full bg-surface-bright border border-outline text-on-surface rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md"
+                        id="sensor-name" placeholder="ex: Sensor Norte 01" type="text">
+                </div>
+                <!-- Property Selection Dropdown -->
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface" for="property-select">Seleção de
+                        Propriedade</label>
+                    <div class="relative">
+                        <select
+                            class="w-full appearance-none bg-surface-bright border border-outline text-on-surface rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md pr-10"
+                            id="property-select">
+                            <option disabled="" selected="" value="">Selecione uma propriedade</option>
+                            <option value="finca-valle">Finca El Valle</option>
+                            <option value="hacienda-sol">Hacienda Del Sol</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none"
+                            data-icon="expand_more">expand_more</span>
+                    </div>
+                </div>
+                <!-- Greenhouse/Sector Selection Dropdown -->
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface" for="sector-select">Seleção de
+                        Estufa/Setor</label>
+                    <div class="relative">
+                        <select
+                            class="w-full appearance-none bg-surface-bright border border-outline text-on-surface rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md pr-10"
+                            id="sector-select">
+                            <option disabled="" selected="" value="">Selecione um setor</option>
+                            <option value="invernadero-a">Invernadero A - Tomates</option>
+                            <option value="sector-norte">Sector Norte - Maíz</option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none"
+                            data-icon="expand_more">expand_more</span>
+                    </div>
+                </div>
+                <!-- MAC Address / Serial ID Input with QR Scanner -->
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface" for="mac-address">Endereço MAC / ID
+                        Serial</label>
+                    <div class="relative flex items-center">
+                        <input
+                            class="w-full bg-surface-bright border border-outline text-on-surface rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent font-body-md text-body-md pr-12 font-mono uppercase"
+                            id="mac-address" placeholder="00:1A:2B:3C:4D:5E" type="text">
+                        <button
+                            class="absolute right-2 p-2 text-primary hover:bg-surface-container-high rounded-md transition-colors flex items-center justify-center"
+                            type="button">
+                            <span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+                        </button>
+                    </div>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Escaneie o código QR no verso do
+                        sensor.</p>
+                </div>
+            </form>
+            <div class="mt-8">
+                <button onclick="window.location.href='NovoSensor3.html'"
+                    class="w-full bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-lg py-4 px-6 flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
+                    <span class="material-symbols-outlined" data-icon="link">link</span>
+                    Vincular Sensor
+                </button>
+            </div>
+        </div>
+        <!-- Action Button Fixed to Bottom on Mobile, Inline on Desktop -->
+    </main>
+</body>
+
+</html>

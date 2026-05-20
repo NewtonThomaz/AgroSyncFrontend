@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
+    <title>AgroSync - Nova Operação</title>
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind-config.js"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+
+        body {
+            background-color: #f9f9f6;
+            color: #1a1c1a;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <!-- TopAppBar -->
+    <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <button onclick="history.back()"
+            class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+        </button>
+        <div class="flex items-center gap-4">
+
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+        <button onclick="window.location.reload()"
+            class="flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="flex-grow pt-24 pb-6 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto w-full">
+        <!-- Header Section -->
+        <section class="mb-8">
+            <h2
+                class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">
+                Registrar Atividade de Campo</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">Preencha os dados abaixo para documentar a nova
+                operação realizada no lote.</p>
+        </section>
+        <!-- Bento Grid Form Structure -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-bento-gap">
+            <!-- Type and Date Card -->
+            <div
+                class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-6 md:col-span-2">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary">pending_actions</span>
+                    <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                        Identificação do Registro</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Operation Type -->
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-sm text-label-sm text-on-surface-variant">Tipo de Operação</label>
+                        <select
+                            class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none appearance-none">
+                            <option disabled="" selected="" value="">Selecione a operação</option>
+                            <option>Irrigação</option>
+                            <option>Adubação</option>
+                            <option>Colheita</option>
+                            <option>Manejo</option>
+                            <option>Pulverização</option>
+                        </select>
+                    </div>
+                    <!-- Date and Time -->
+                    <div class="flex flex-col gap-2">
+                        <label class="font-label-sm text-label-sm text-on-surface-variant">Data e Hora</label>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none"
+                                type="datetime-local" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Property and Culture Card -->
+            <div
+                class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-6">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary">location_on</span>
+                    <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Localização
+                        e Cultura</h3>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface-variant">Propriedade / Lote</label>
+                    <select
+                        class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none">
+                        <option>Fazenda Boa Vista - Lote A1</option>
+                        <option>Fazenda Boa Vista - Lote B4</option>
+                        <option>Sitio Primavera - Estufa 02</option>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface-variant">Cultura Associada</label>
+                    <select
+                        class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none">
+                        <option>Milho Safrinha</option>
+                        <option>Soja Orgânica</option>
+                        <option>Tomate Cereja</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Operator and Inputs Card -->
+            <div
+                class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-6">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary">engineering</span>
+                    <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                        Responsabilidade</h3>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface-variant">Responsável / Operador</label>
+                    <input
+                        class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none"
+                        placeholder="Nome do colaborador" type="text" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface-variant">Insumos Utilizados</label>
+                    <input
+                        class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none"
+                        placeholder="Ex: Fertilizante NPK, Defensivo X" type="text" />
+                </div>
+            </div>
+            <!-- Observations Card -->
+            <div
+                class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-6 md:col-span-2">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="material-symbols-outlined text-primary">description</span>
+                    <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Detalhes
+                        Adicionais</h3>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-label-sm text-label-sm text-on-surface-variant">Notas e Observações</label>
+                    <textarea
+                        class="w-full bg-surface border border-outline-variant rounded-lg p-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none resize-none"
+                        placeholder="Descreva condições climáticas, anomalias ou detalhes técnicos relevantes..."
+                        rows="4"></textarea>
+                </div>
+            </div>
+            <!-- Action Buttons -->
+            <div class="md:col-span-2 flex flex-col md:flex-row-reverse gap-4 mt-6">
+                <button onclick="window.location.href = 'Relatorios.html'"
+                    class="w-full md:w-auto px-10 h-14 bg-primary text-on-primary font-label-md text-label-md rounded-full shadow-lg hover:bg-primary-container transition-colors active:scale-95 duration-150">
+                    Registrar Operação
+                </button>
+                <button onclick="window.location.href = 'Relatorios.html'"
+                    class="w-full md:w-auto px-10 h-14 bg-transparent border-2 border-primary text-primary font-label-md text-label-md rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+                    Descartar Rascunho
+                </button>
+            </div>
+        </div>
+        <!-- Visual Context Illustration (Bento Style) -->
+        <!-- <div class="mt-12 rounded-2xl overflow-hidden h-48 relative border border-outline-variant">
+            <img alt="Campo agrícola sustentável" class="w-full h-full object-cover grayscale-[0.3] brightness-75"
+                data-alt="A panoramic high-angle shot of a lush, organized agricultural field with precision irrigation systems visible. The lighting is soft morning sun, creating a warm and professional AgTech aesthetic. The color palette is dominated by deep forest greens and soft earthy neutrals, reflecting environmental stewardship and technological precision. The scene is calm, stable, and highly detailed, symbolizing a modern, data-driven farming operation."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoRvOt5bmrYHt8Bh4KVB25mWnBroLpxgcxlIJoi4H2RF5mCMTrdvVLr-Jyeba0wSP6vpUCgtdAYJzQBxJ3gEoTSI6lHwsTgzAo8a_yYiBlM1yyUGiRCrwrDOWJqfrx9DtzkmgE3LzyctL0ECae-mIlKJ2vcc_q1h3Egb0zqn21UDAB2ZphNSdW5VfQycUh32VJ-r1A9dXF4n33clNeBgpi3qDJQuwfpU_9MSHk8axhMDHvQ053mGZSm3e2p6dpW54-YIy5lGIpORc" />
+            <div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-6">
+                <p class="text-on-primary font-label-md text-label-md italic">"Documentação precisa é a semente do
+                    crescimento sustentável."</p>
+            </div>
+        </div> -->
+    </main>
+
+</body>
+
+</html>

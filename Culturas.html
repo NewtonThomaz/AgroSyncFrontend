@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AgroSync - Gestão de Culturas</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet">
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .dual-range::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .dual-range::-moz-range-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md text-body-md min-h-screen">
+    <!-- Overlay for Mobile Sidebar -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        <button
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+
+        <button onclick="window.location.reload()"
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- NavigationDrawer / Sidebar -->
+    <aside
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        id="main-sidebar">
+        <!-- Close Button (Mobile Only) -->
+        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- Profile Header -->
+        <div class="px-6 mb-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+                <img alt="Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+            </div>
+            <div class="overflow-hidden">
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <div class="flex items-center gap-1 mt-0.5">
+                    <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
+                    <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 my-2 border-t border-outline-variant"></div>
+        <nav class="flex-1 overflow-y-auto">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
+                    dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a 
+            class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-lg px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+                href="Culturas.html">
+                <span class="material-symbols-outlined">potted_plant</span>
+                <span class="font-label-md text-label-md">Culturas</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Relatorios.html">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-label-md text-label-md">Relatórios</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Compartilhamento.html">
+                <span class="material-symbols-outlined">share</span>
+                <span class="font-label-md text-label-md">Compartilhar</span>
+            </a>
+            <div class="mx-4 my-2 border-t border-outline-variant"></div>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Perfil.html">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="font-label-md text-label-md">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Configurações.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Configurações</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BottomNavBar (Mobile) -->
+    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
+                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
+                class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a><a
+            class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
+            href="Culturas.html"><span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
+                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Relatorios.html"><span class="material-symbols-outlined text-[24px] ">assessment</span><span
+                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Compartilhamento.html"><span class="material-symbols-outlined text-[24px] ">share</span><span
+                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
+                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
+                class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
+    </nav>
+    <!-- Main Content -->
+    <main class="pt-20 pb-10 md:pl-64 min-h-screen">
+        <div class="px-margin-mobile md:px-margin-desktop py-6 max-w-7xl mx-auto">
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                <div>
+                    <h2
+                        class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
+                        Gestão de Culturas</h2>
+                    <p class="text-on-surface-variant mt-1">Visão geral das culturas ativas em plantio.</p>
+                </div>
+                <button onclick="window.location.href='NovaCultura.html'"
+                    class="bg-surface-tint text-on-primary hover:bg-primary px-6 py-3 rounded-lg font-label-md text-label-md flex items-center gap-2 transition-colors shadow-sm w-full md:w-auto justify-center">
+                    <span class="material-symbols-outlined" data-icon="add">add</span>
+                    Nova Cultura
+                </button>
+            </div>
+            <!-- Grid Content -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
+                <!-- Crop Card 1 -->
+                <div
+                    class="md:col-span-6 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined" data-icon="grass">grass</span>
+                            </div>
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-on-surface">Alface Crespa</h3>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Setor Leste - Lote C</p>
+                            </div>
+                        </div>
+                        <span
+                            class="bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded-full font-label-sm text-label-sm">Saudável</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
+                                <span class="">Crescimento</span>
+                                <span class="">78%</span>
+                            </div>
+                            <div class="w-full bg-surface-variant rounded-full h-2">
+                                <div class="bg-surface-tint h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
+                                <p class="font-body-md text-body-md text-on-surface">02/11/2023</p>
+                            </div>
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
+                                <p class="font-body-md text-body-md text-on-surface">15/12/2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Crop Card 2 -->
+                <div
+                    class="md:col-span-6 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined" data-icon="local_florist">local_florist</span>
+                            </div>
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-on-surface">Tomate</h3>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Estufa Principal</p>
+                            </div>
+                        </div>
+                        <span
+                            class="bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded-full font-label-sm text-label-sm">Ideal</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
+                                <span class="">Crescimento</span>
+                                <span class="">85%</span>
+                            </div>
+                            <div class="w-full bg-surface-variant rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
+                                <p class="font-body-md text-body-md text-on-surface">01/08/2023</p>
+                            </div>
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
+                                <p class="font-body-md text-body-md text-on-surface">05/11/2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Crop Card 3 -->
+                <div
+                    class="md:col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+                                <span class="material-symbols-outlined"
+                                    data-icon="energy_savings_leaf">energy_savings_leaf</span>
+                            </div>
+                            <div>
+                                <h3 class="font-headline-md text-headline-md text-on-surface">Soja</h3>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Setor Sul - Lote B</p>
+                            </div>
+                        </div>
+                        <span
+                            class="bg-error-container text-on-error-container px-2 py-1 rounded-full font-label-sm text-label-sm">Alerta</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
+                                <span class="">Crescimento</span>
+                                <span class="">30%</span>
+                            </div>
+                            <div class="w-full bg-surface-variant rounded-full h-2">
+                                <div class="bg-error h-2 rounded-full" style="width: 30%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
+                                <p class="font-body-md text-body-md text-on-surface">10/10/2023</p>
+                            </div>
+                            <div>
+                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
+                                <p class="font-body-md text-body-md text-on-surface">15/03/2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

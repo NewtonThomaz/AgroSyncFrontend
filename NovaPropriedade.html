@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AgroSync - Nova Propriedade</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen">
+    <!-- TopAppBar -->
+    <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <button onclick="history.back()"
+            class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+        </button>
+        <div class="flex items-center gap-4">
+
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+        <button onclick="window.location.reload()"
+            class="flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <div class="flex items-center gap-4">
+            <button
+                class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+                <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <h1 class="font-headline-md text-headline-md font-bold text-primary">AgroSync</h1>
+            </div>
+        </div>
+        <div class="hidden md:flex gap-6">
+            <span
+                class="text-on-surface-variant font-label-md text-label-md cursor-pointer hover:text-primary transition-colors">Dashboard</span>
+            <span class="text-primary font-bold font-label-md text-label-md cursor-pointer">Properties</span>
+            <span
+                class="text-on-surface-variant font-label-md text-label-md cursor-pointer hover:text-primary transition-colors">Tasks</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">person</span>
+        </div>
+    </header> -->
+    <main class="max-w-5xl mx-auto px-margin-mobile md:px-margin-desktop py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <span class="">
+
+                <h2
+                    class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">
+                    Cadastrar Nova Propriedade</h2>
+            </span>
+            <p class="font-body-md text-body-md text-on-surface-variant">Insira as informações técnicas e geográficas da
+                sua nova unidade produtiva.</p>
+        </div>
+        <!-- Bento Grid Layout for Form -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
+            <!-- Left Column: Primary Details -->
+            <div class="md:col-span-7 flex flex-col gap-bento-gap">
+                <!-- Name & Area Card -->
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-secondary">info</span>
+                        <h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">
+                            Informações Básicas</h3>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="font-label-md text-label-md text-on-surface">Nome da Propriedade</label>
+                            <input
+                                class="w-full bg-surface border-2 border-outline-variant focus:border-secondary focus:ring-0 rounded-lg p-3 text-body-md transition-all outline-none"
+                                placeholder="Ex: Fazenda Boa Vista" type="text">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="font-label-md text-label-md text-on-surface">Área Total (Hectares)</label>
+                            <div class="relative">
+                                <input
+                                    class="w-full bg-surface border-2 border-outline-variant focus:border-secondary focus:ring-0 rounded-lg p-3 text-body-md transition-all outline-none pr-12"
+                                    placeholder="0.00" type="number">
+                                <span
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-label-sm">ha</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Description Card -->
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl grow">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-secondary">description</span>
+                        <h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">
+                            Descrição Detalhada</h3>
+                    </div>
+                    <div class="flex flex-col gap-2 h-full">
+                        <label class="font-label-md text-label-md text-on-surface">Notas e Observações</label>
+                        <textarea
+                            class="w-full bg-surface border-2 border-outline-variant focus:border-secondary focus:ring-0 rounded-lg p-3 text-body-md transition-all outline-none resize-none h-40"
+                            placeholder="Descreva o tipo de solo, relevo ou histórico de cultivos..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column: Location & Visual -->
+            <div class="md:col-span-5 flex flex-col gap-bento-gap">
+                <!-- Location Card -->
+                <div class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-secondary">location_on</span>
+                        <h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">
+                            Localização</h3>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="font-label-md text-label-md text-on-surface">Cidade / Estado</label>
+                            <input
+                                class="w-full bg-surface border-2 border-outline-variant focus:border-secondary focus:ring-0 rounded-lg p-3 text-body-md transition-all outline-none"
+                                placeholder="Ex: Sorriso, MT" type="text">
+                        </div>
+                        <!-- Map Placeholder / Visualization -->
+                        <div class="aspect-video w-full rounded-lg overflow-hidden relative group">
+                            <img class="w-full h-full object-cover"
+                                data-alt="A detailed aerial view of a vibrant green agricultural landscape with symmetrical crop patterns under a bright morning sun. The scene uses a corporate modern aesthetic with high clarity, clean lines, and deep forest green tones, creating a sense of technological precision and environmental reliability."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwvQLj9m2CK58udo6z4klzh6U677pdjXx0FHtyLhyYPP-_fXJHsDY45OLAT5kjr4cZDs1SEjUeUYjSO2_hCixJdsdlgX7YMX0Ea0GOPwSmkhENtrArHc0-O3dqrSHatZylZ7biiZbWBSV7-olgLUpqWalxgf1942Kcj8wt6IXkCgt20hI0ybO7tyY5gyPZJrsxa41XDnps5jqNIlRLNc98g3Z4-o7j1hYYLu-OmoYEIie3TEjDIZn68-Xehj3BJQArTbK5l5LGwKY">
+                            <div
+                                class="absolute inset-0 bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors cursor-pointer">
+                                <div class="bg-surface p-2 rounded-full shadow-lg">
+                                    <span class="material-symbols-outlined text-primary">add_location_alt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Guidance Card -->
+                <div class="bg-primary-container p-6 rounded-xl text-on-primary">
+                    <div class="flex items-start gap-4">
+                        <span class="material-symbols-outlined text-primary-fixed">lightbulb</span>
+                        <div>
+                            <h4 class="font-label-md text-label-md mb-2">Dica AgroSync</h4>
+                            <p class="font-body-md text-body-md opacity-90 leading-relaxed">
+                                Certifique-se de que a área em hectares esteja de acordo com o registro oficial para
+                                garantir a precisão dos cálculos de insumos e produtividade.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Action Footer -->
+        <div class="mt-12 flex flex-col md:flex-row items-center justify-end gap-4">
+            <button onclick="window.location.href='Dashboard.html'"
+               class="w-full md:w-auto px-8 h-14 border-2 border-secondary text-secondary rounded-lg font-headline-md text-headline-md flex items-center justify-center gap-2 hover:bg-surface-container-high active:scale-95 transition-all"
+                    type="button"><span class="material-symbols-outlined" data-icon="delete_sweep">delete_sweep</span>
+                Descartar Rascunho
+            </button>
+            <button onclick="window.location.href='Dashboard.html'"
+                class="w-full md:w-auto px-8 h-14 bg-primary-container text-white rounded-lg font-headline-md text-headline-md flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+                <span class="material-symbols-outlined" data-icon="save">save</span>
+                Salvar Propriedade
+            </button>
+        </div>
+    </main>
+    <!-- BottomNavBar (Mobile only) -->
+    <!-- <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <div
+            class="flex flex-col items-center justify-center text-on-surface-variant px-1 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]">dashboard</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Dashboard</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-2 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Estufas</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-on-surface-variant px-1 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]">assessment</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Relatórios</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-on-surface-variant px-1 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]">share</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Compartilhar</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-on-surface-variant px-1 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]">person</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Perfil</span>
+        </div>
+        <div
+            class="flex flex-col items-center justify-center text-on-surface-variant px-1 py-1 active:scale-90 duration-150">
+            <span class="material-symbols-outlined text-[24px]">settings</span>
+            <span class="font-label-sm text-[10px] sm:text-label-sm text-center">Configurações</span>
+        </div>
+    </nav> -->
+</body>
+
+</html>

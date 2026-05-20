@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AgroSync - Monitoramento de Propriedade</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md text-body-md min-h-screen pb-20 md:pb-0 md:pl-64 pt-16 md:pt-0"
+    x-data="{ mobileMenuOpen: false }">
+    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        <button
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+
+        <button onclick="window.location.reload()"
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- NavigationDrawer / Sidebar -->
+    <aside
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        id="main-sidebar">
+        <!-- Close Button (Mobile Only) -->
+        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- Profile Header -->
+        <div class="px-6 mb-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+                <img alt="Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+            </div>
+            <div class="overflow-hidden">
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <div class="flex items-center gap-1 mt-0.5">
+                    <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
+                    <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 my-2 border-t border-outline-variant"></div>
+        <nav class="flex-1 overflow-y-auto">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
+                    dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Culturas.html">
+                <span class="material-symbols-outlined">potted_plant</span>
+                <span class="font-label-md text-label-md">Culturas</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Relatorios.html">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-label-md text-label-md">Relatórios</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Compartilhamento.html">
+                <span class="material-symbols-outlined">share</span>
+                <span class="font-label-md text-label-md">Compartilhar</span>
+            </a>
+            <div class="mx-4 my-2 border-t border-outline-variant"></div>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Perfil.html">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="font-label-md text-label-md">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Configurações.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Configurações</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BottomNavBar (Mobile) -->
+    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
+                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
+                class="font-label-sm text-[10px] mt-0.5">Dashboard
+            </span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Culturas.html">
+            <span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
+                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Relatorios.html">
+            <span class="material-symbols-outlined text-[24px] ">assessment</span><span
+                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Compartilhamento.html">
+            <span class="material-symbols-outlined text-[24px] ">share</span><span
+                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
+                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
+                class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="mt-10   p-margin-mobile md:p-margin-desktop max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div>
+                <h1
+                    class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">
+                    Fazenda São João</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Produção de hortaliças e grãos - Setor
+                    Alpha</p>
+            </div>
+            <div class="flex gap-2">
+                <span
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md border border-primary-fixed-dim">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    Sensores Ativos
+                </span>
+                <span
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md border border-outline-variant">
+                    <span class="material-symbols-outlined text-sm">wifi</span>
+                    Conectado
+                </span>
+            </div>
+        </div>
+        <!-- Ações Section -->
+        <!-- <div class="mb-8">
+            <h2 class="font-headline-md text-headline-md text-on-surface mb-4">Ações Rápidas</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Compartilhamento.html'">
+                    <span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">share</span>
+                    <div>
+                        <span
+                            class="block font-label-md text-label-md text-on-surface font-semibold">Compartilhamento</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Gerenciar acessos</span>
+                    </div>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Relatorios.html'">
+                    <span
+                        class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">assessment</span>
+                    <div>
+                        <span class="block font-label-md text-label-md text-on-surface font-semibold">Relatórios e
+                            Histórico</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Ver atividades</span>
+                    </div>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Culturas.html'">
+                    <span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">eco</span>
+                    <div>
+                        <span class="block font-label-md text-label-md text-on-surface font-semibold">Culturas</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Gerenciar plantio</span>
+                    </div>
+                </button>
+            </div>
+        </div> -->
+
+        <div class="mb-8">
+            <h2 class="font-headline-md text-headline-md text-on-surface mb-4">Ações Rápidas</h2>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Compartilhamento.html'">
+                    <span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">share</span>
+                    <div>
+                        <span
+                            class="block font-label-md text-label-md text-on-surface font-semibold">Compartilhamento</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Gerenciar acessos</span>
+                    </div>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Relatorios.html'">
+                    <span
+                        class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">assessment</span>
+                    <div>
+                        <span class="block font-label-md text-label-md text-on-surface font-semibold">Relatórios e
+                            Histórico</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Ver atividades</span>
+                    </div>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='Culturas.html'">
+                    <span class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">eco</span>
+                    <div>
+                        <span class="block font-label-md text-label-md text-on-surface font-semibold">Culturas</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Gerenciar plantio</span>
+                    </div>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary hover:bg-surface-container-low rounded-xl p-4 flex items-center justify-start gap-3 transition-colors text-left"
+                    onclick="window.location.href='NovoSensor1.html'">
+                    <span
+                        class="material-symbols-outlined text-primary bg-primary-fixed p-2 rounded-lg">settings_input_antenna</span>
+                    <div>
+                        <span class="block font-label-md text-label-md text-on-surface font-semibold">Vincular
+                            Sensor</span>
+                        <span class="block font-label-sm text-label-sm text-on-surface-variant">Novo dispositivo</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <!-- Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
+            <!-- Sensor: Temperatura -->
+            <div
+                class="md:col-span-4 bg-surface border border-outline-variant rounded-xl p-5 hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary"
+                            style="font-variation-settings: 'FILL' 1;">device_thermostat</span>
+                        <h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                            Temperatura</h2>
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined text-outline-variant cursor-pointer hover:text-on-surface">more_vert</span>
+                        <div
+                            class="absolute right-0 top-full mt-1 w-40 bg-surface border border-outline-variant rounded-lg shadow-lg hidden group-hover:block z-10">
+                            <ul class="py-1">
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-surface-container text-on-surface text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">edit</span> Editar
+                                        Sensor</button></li>
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-error-container text-error text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">delete</span> Excluir</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 mb-2">
+                    <span class="font-display-lg text-display-lg text-on-surface">24.5</span>
+                    <span class="font-headline-md text-headline-md text-on-surface-variant mb-1">°C</span>
+                </div>
+                <div class="h-8 mb-4 flex items-end">
+                    <svg class="w-full h-full" preserveAspectRatio="none">
+                        <polyline fill="none" points="0,30 20,25 40,28 60,15 80,20 100,10" stroke="#006399"
+                            stroke-width="2" vector-effect="non-scaling-stroke"></polyline>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span
+                        class="font-label-sm text-label-sm text-secondary bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded">Ideal:
+                        22-26°C</span>
+                    <span class="font-label-sm text-label-sm text-outline flex items-center gap-1"><span
+                            class="material-symbols-outlined text-[14px]">arrow_upward</span> +0.5° nas últimas
+                        2h</span>
+                </div>
+            </div>
+            <!-- Sensor: Umidade -->
+            <div
+                class="md:col-span-4 bg-surface border border-outline-variant rounded-xl p-5 hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-secondary"
+                            style="font-variation-settings: 'FILL' 1;">water_drop</span>
+                        <h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Umidade
+                            Relativa</h2>
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined text-outline-variant cursor-pointer hover:text-on-surface">more_vert</span>
+                        <div
+                            class="absolute right-0 top-full mt-1 w-40 bg-surface border border-outline-variant rounded-lg shadow-lg hidden group-hover:block z-10">
+                            <ul class="py-1">
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-surface-container text-on-surface text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">edit</span> Editar
+                                        Sensor</button></li>
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-error-container text-error text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">delete</span> Excluir</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 mb-2">
+                    <span class="font-display-lg text-display-lg text-on-surface">68</span>
+                    <span class="font-headline-md text-headline-md text-on-surface-variant mb-1">%</span>
+                </div>
+                <div class="h-8 mb-4 flex items-end">
+                    <svg class="w-full h-full" preserveAspectRatio="none">
+                        <polyline fill="none" points="0,10 20,15 40,12 60,20 80,25 100,30" stroke="#002d1d"
+                            stroke-width="2" vector-effect="non-scaling-stroke"></polyline>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span
+                        class="font-label-sm text-label-sm text-primary bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded">Ideal:
+                        65-75%</span>
+                    <span class="font-label-sm text-label-sm text-outline flex items-center gap-1"><span
+                            class="material-symbols-outlined text-[14px]">arrow_downward</span> -2% nas últimas
+                        2h</span>
+                </div>
+            </div>
+            <!-- Sensor: Condutividade Elétrica (EC) -->
+            <div
+                class="md:col-span-4 bg-surface border border-outline-variant rounded-xl p-5 hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-tertiary-container"
+                            style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        <h2 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+                            Condutividade Elétrica (EC)</h2>
+                    </div>
+                    <div class="relative group">
+                        <span
+                            class="material-symbols-outlined text-outline-variant cursor-pointer hover:text-on-surface">more_vert</span>
+                        <div
+                            class="absolute right-0 top-full mt-1 w-40 bg-surface border border-outline-variant rounded-lg shadow-lg hidden group-hover:block z-10">
+                            <ul class="py-1">
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-surface-container text-on-surface text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">edit</span> Editar
+                                        Sensor</button></li>
+                                <li class=""><button
+                                        class="w-full text-left px-4 py-2 hover:bg-error-container text-error text-sm flex items-center gap-2"><span
+                                            class="material-symbols-outlined text-[18px]">delete</span> Excluir</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 mb-2">
+                    <span class="font-display-lg text-display-lg text-on-surface">1.8</span>
+                    <span class="font-headline-md text-headline-md text-on-surface-variant mb-1">mS/cm</span>
+                </div>
+                <div class="h-8 mb-4 flex items-end">
+                    <svg class="w-full h-full" preserveAspectRatio="none">
+                        <polyline fill="none" points="0,20 20,22 40,18 60,20 80,19 100,20" stroke="#56340e"
+                            stroke-width="2" vector-effect="non-scaling-stroke"></polyline>
+                    </svg>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span
+                        class="font-label-sm text-label-sm text-tertiary-container bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded">Atenção:
+                        Limite 2.0</span>
+                    <span class="font-label-sm text-label-sm text-outline flex items-center gap-1"><span
+                            class="material-symbols-outlined text-[14px]">horizontal_rule</span> Estável</span>
+                </div>
+            </div>
+            <!-- Gráfico de Tendências (Desktop Only) -->
+            <div
+                class="hidden md:block md:col-span-12 bg-surface border border-outline-variant rounded-xl p-5 h-80 hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-shadow relative overflow-hidden">
+                <div class="flex justify-between items-center mb-4 z-10 relative">
+                    <h2 class="font-headline-md text-headline-md text-on-surface">Tendências Históricas (24h)</h2>
+                    <div class="flex gap-2">
+                        <button
+                            class="px-3 py-1 text-sm border border-outline-variant rounded-md text-on-surface-variant hover:bg-surface-container-low">Temp</button>
+                        <button
+                            class="px-3 py-1 text-sm border border-outline-variant rounded-md text-on-surface-variant hover:bg-surface-container-low">Umid</button>
+                        <button
+                            class="px-3 py-1 text-sm bg-surface-container-high border border-outline-variant rounded-md text-on-surface">EC</button>
+                    </div>
+                </div>
+                <!-- Placeholder for Chart -->
+                <div
+                    class="absolute inset-0 top-16 left-5 right-5 bottom-5 bg-[linear-gradient(to_right,#f3f4f1_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f1_1px,transparent_1px)] bg-[size:2rem_2rem] border-l border-b border-outline-variant flex items-end opacity-50">
+                    <div class="w-full h-full relative">
+                        <!-- Pseudo-chart line using SVG -->
+                        <svg class="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+                            <polyline fill="none"
+                                points="0,150 100,140 200,160 300,120 400,130 500,90 600,100 700,60 800,80 900,40 1000,50"
+                                stroke="#006399" stroke-width="2" vector-effect="non-scaling-stroke"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="absolute bottom-1 left-5 right-5 flex justify-between text-label-sm text-outline z-10">
+                    <span class="">00:00</span>
+                    <span class="">06:00</span>
+                    <span class="">12:00</span>
+                    <span class="">18:00</span>
+                    <span class="">Agora</span>
+                </div>
+            </div>
+            <!-- Controles Rápidos -->
+            <div class="md:col-span-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-bento-gap">
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary-fixed hover:bg-surface-container-low rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-colors">
+                    <span class="material-symbols-outlined text-primary">water</span>
+                    <span class="font-label-md text-label-md text-on-surface">Iniciar Irrigação</span>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary-fixed hover:bg-surface-container-low rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-colors">
+                    <span class="material-symbols-outlined text-primary">air</span>
+                    <span class="font-label-md text-label-md text-on-surface">Ativar Ventilação</span>
+                </button>
+                <button
+                    class="bg-surface border border-outline-variant hover:border-primary-fixed hover:bg-surface-container-low rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-colors">
+                    <span class="material-symbols-outlined text-primary">light_mode</span>
+                    <span class="font-label-md text-label-md text-on-surface">Controle de Luz</span>
+                </button>
+                <button
+                    class="bg-error-container border border-error hover:bg-[#ffcdc9] rounded-xl p-4 flex flex-col items-center justify-center gap-2 transition-colors">
+                    <span class="material-symbols-outlined text-on-error-container">power_settings_new</span>
+                    <span class="font-label-md text-label-md text-on-error-container font-bold">Parada de
+                        Emergência</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const isClosed = sidebar.classList.contains('sidebar-closed');
+
+            if (isClosed) {
+                sidebar.classList.remove('sidebar-closed');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                sidebar.classList.add('sidebar-closed');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+    </script>
+</body>
+
+</html>

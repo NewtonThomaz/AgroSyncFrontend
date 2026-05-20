@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AgroSync - Gestão de Compartilhamento</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="tailwind-config.js"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .material-symbols-outlined {
+                font-family: 'Material Symbols Outlined';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+                -webkit-font-feature-settings: 'liga';
+                font-feature-settings: 'liga';
+                -webkit-font-smoothing: antialiased;
+            }
+            .material-symbols-outlined[data-weight="fill"] {
+                font-variation-settings: 'FILL' 1;
+            }
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .dual-range::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .dual-range::-moz-range-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background flex h-screen overflow-hidden">
+    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        <button
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+
+        <button onclick="window.location.reload()"
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- NavigationDrawer / Sidebar -->
+    <aside
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        id="main-sidebar">
+        <!-- Close Button (Mobile Only) -->
+        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- Profile Header -->
+        <div class="px-6 mb-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+                <img alt="Avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+            </div>
+            <div class="overflow-hidden">
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
+                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <div class="flex items-center gap-1 mt-0.5">
+                    <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
+                    <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
+                </div>
+            </div>
+        </div>
+        <div class="mx-4 my-2 border-t border-outline-variant"></div>
+        <nav class="flex-1 overflow-y-auto">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
+                    dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Culturas.html">
+                <span class="material-symbols-outlined">potted_plant</span>
+                <span class="font-label-md text-label-md">Culturas</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Relatorios.html">
+                <span class="material-symbols-outlined">assessment</span>
+                <span class="font-label-md text-label-md">Relatórios</span>
+            </a>
+            <a class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-lg px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+                href="Compartilhamento.html">
+                <span class="material-symbols-outlined">share</span>
+                <span class="font-label-md text-label-md">Compartilhar</span>
+            </a>
+            <div class="mx-4 my-2 border-t border-outline-variant"></div>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Perfil.html">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="font-label-md text-label-md">Perfil</span>
+            </a>
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="Configurações.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Configurações</span>
+            </a>
+        </nav>
+    </aside>
+    <!-- BottomNavBar (Mobile) -->
+    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
+                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
+                class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Culturas.html"><span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
+                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Relatorios.html"><span class="material-symbols-outlined text-[24px] ">assessment</span><span
+                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
+            class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
+            href="Compartilhamento.html"><span class="material-symbols-outlined text-[24px] ">share</span><span
+                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
+                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
+            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
+            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
+                class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="flex-1 flex flex-col h-full relative pt-16 md:ml-64 bg-background">
+        <div class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop pb-24 md:pb-margin-desktop max-w-7xl mx-auto w-full"
+            id="content-canvas">
+            <header class="mb-8">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Gestão de Compartilhamento</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant">Gerencie quem tem acesso à Propriedade
+                    "Fazenda Boa Vista". Controle permissões de visualização e edição.</p>
+            </header>
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
+                <!-- Bento Card: Compartilhar (Action Form) -->
+                <section
+                    class="md:col-span-4 bg-surface border border-outline-variant rounded-xl p-6 flex flex-col shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-symbols-outlined text-primary" data-icon="person_add">person_add</span>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Adicionar Usuário</h3>
+                    </div>
+                    <form class="flex flex-col gap-4 flex-1">
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-md text-label-md text-on-surface" for="email">E-mail do
+                                usuário</label>
+                            <input
+                                class="w-full h-12 bg-surface border border-outline-variant rounded-lg px-4 font-body-md text-body-md focus:ring-2 focus:ring-secondary focus:outline-none transition-all"
+                                id="email" placeholder="exemplo@agrosync.com" type="email" />
+                        </div>
+                        <div class="flex flex-col gap-2 mt-2">
+                            <span class="font-label-md text-label-md text-on-surface">Nível de Acesso</span>
+                            <label
+                                class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
+                                <input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="role" type="radio"
+                                    value="proprietario" />
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Proprietário</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Controle total,
+                                        financeiro e configurações.</span>
+                                </div>
+                            </label>
+                            <label
+                                class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
+                                <input checked="" class="mt-1 text-primary focus:ring-primary h-4 w-4" name="role"
+                                    type="radio" value="gestor" />
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Gestor</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Pode editar dados
+                                        e realizar cadastros.</span>
+                                </div>
+                            </label>
+                            <label
+                                class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
+                                <input class="mt-1 text-primary focus:ring-primary h-4 w-4" name="role" type="radio"
+                                    value="consultor" />
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Consultor</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Apenas
+                                        visualização de relatórios e painéis.</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="mt-auto pt-6">
+                            <button onclick="history.back()"
+                                class="w-full h-12 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex justify-center items-center gap-2 hover:opacity-90 active:scale-95 transition-all duration-150"
+                                type="button">
+                                <span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+                                Compartilhar Propriedade
+                            </button>
+                        </div>
+                    </form>
+                </section>
+                <!-- Bento Card: Lista de Usuários -->
+                <section
+                    class="md:col-span-8 bg-surface border border-outline-variant rounded-xl overflow-hidden flex flex-col shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
+                    <div
+                        class="px-6 py-5 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-on-surface-variant"
+                                data-icon="group">group</span>
+                            <h3 class="font-headline-md text-headline-md text-on-surface">Usuários Atuais</h3>
+                        </div>
+                        <span
+                            class="bg-surface-container text-on-surface font-label-sm text-label-sm px-2.5 py-1 rounded-full">4
+                            Acessos</span>
+                    </div>
+                    <div class="flex flex-col divide-y divide-outline-variant overflow-y-auto max-h-[600px]">
+                        <!-- User Row 1 (Proprietário) -->
+                        <div
+                            class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors min-h-[72px]">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-label-md text-label-md">
+                                    CA
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Carlos Almeida
+                                        (Você)</span>
+                                    <span
+                                        class="font-label-sm text-label-sm text-on-surface-variant">carlos@agrosync.com</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="bg-secondary text-on-secondary px-3 py-1 rounded-full font-label-sm text-label-sm inline-block">Proprietário</span>
+                                <button
+                                    class="text-outline hover:text-on-surface p-1 rounded transition-colors opacity-50 cursor-not-allowed">
+                                    <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- User Row 2 (Gestor) -->
+                        <div
+                            class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors min-h-[72px]">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-md text-label-md">
+                                    MR
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Mariana Ribeiro</span>
+                                    <span
+                                        class="font-label-sm text-label-sm text-on-surface-variant">mariana.gestao@gmail.com</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm inline-block">Gestor</span>
+                                <button class="text-outline hover:text-on-surface p-1 rounded transition-colors">
+                                    <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- User Row 3 (Consultor) -->
+                        <div
+                            class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors min-h-[72px]">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-md text-label-md">
+                                    FS
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-on-surface">Fernando Souza</span>
+                                    <span
+                                        class="font-label-sm text-label-sm text-on-surface-variant">fs.agronomia@consultoria.com</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="bg-surface-container-highest text-on-surface-variant border border-outline-variant px-3 py-1 rounded-full font-label-sm text-label-sm inline-block">Consultor</span>
+                                <button class="text-outline hover:text-on-surface p-1 rounded transition-colors">
+                                    <span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- User Row 4 (Consultor Pending) -->
+                        <div
+                            class="flex items-center justify-between p-4 hover:bg-surface-container transition-colors min-h-[72px] bg-tertiary-container/5">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-tertiary-fixed border border-dashed border-tertiary flex items-center justify-center text-tertiary font-label-md text-label-md">
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="font-label-md text-label-md text-tertiary font-medium">Convite
+                                        Pendente</span>
+                                    <span
+                                        class="font-label-sm text-label-sm text-on-surface-variant">lucas.tecnico@agrosync.com</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="bg-surface-container-highest text-on-surface-variant border border-outline-variant px-3 py-1 rounded-full font-label-sm text-label-sm inline-block opacity-70">Consultor</span>
+                                <button class="text-error hover:bg-error-container p-2 rounded-full transition-colors"
+                                    title="Cancelar Convite">
+                                    <span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            if (sidebar.classList.contains('sidebar-closed')) {
+                sidebar.classList.remove('sidebar-closed');
+                overlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                sidebar.classList.add('sidebar-closed');
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+    </script>
+</body>
+
+</html>

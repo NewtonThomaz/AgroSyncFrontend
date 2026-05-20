@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head></head>
+
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>AgroSync - Cadastrar Nova Cultura</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="tailwind-config.js"></script>
+    <style>
+        body {
+            }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .dual-range::-webkit-slider-thumb {
+            pointer-events: auto;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .dual-range::-moz-range-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #1b4332;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-closed {
+                transform: translateX(0);
+            }
+        }
+    </style>
+    <!-- TopAppBar -->
+    <header
+        class="w-full top-0 sticky bg-surface border-b border-outline-variant z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16">
+        <button onclick="history.back()"
+            class="hover:bg-surface-container transition-colors p-2 rounded-full active:scale-95 duration-150 flex items-center justify-center">
+            <span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+        </button>
+        <div class="flex items-center gap-4">
+
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+        </div>
+        <button onclick="window.location.reload()"
+            class="flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            <span class="material-symbols-outlined">cloud_sync</span>
+        </button>
+    </header>
+    <!-- Main Content Area (Bento Layout) -->
+    <main class="flex-grow p-margin-mobile md:p-margin-desktop max-w-7xl mx-auto w-full">
+        <div class="mb-gutter">
+            <h1
+                class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">
+                Cadastrar Nova Cultura</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">Preencha os detalhes para iniciar o
+                monitoramento inteligente.</p>
+        </div>
+        <form id="form-cultura" class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap" onsubmit="validarFormulario(event)" novalidate>
+            <!-- Section: Informações do Cultivo (Bento 2x1) -->
+            <section
+                class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-secondary" data-icon="potted_plant">potted_plant</span>
+                    <h2 class="font-label-md text-label-md text-on-surface-variant">Informações do Cultivo</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+                    <div class="flex flex-col gap-1">
+                        <label class="font-label-sm text-label-sm text-on-surface px-1">Nome da Cultura</label>
+                        <input
+                            class="w-full h-12 px-4 rounded-lg border border-outline focus:ring-2 focus:ring-secondary focus:border-secondary bg-surface outline-none transition-all font-body-md text-body-md"
+                            placeholder="Ex: Alface Crespa" type="text" id="nomeCultura">
+                    </div>
+                    <div class="flex flex-col gap-1 relative">
+                        <label class="font-label-sm text-label-sm text-on-surface px-1">Categoria</label>
+                        <div class="relative">
+                            <input
+                                class="w-full h-12 pl-4 pr-10 rounded-lg border border-outline focus:ring-2 focus:ring-secondary focus:border-secondary bg-surface outline-none transition-all font-body-md text-body-md"
+                                placeholder="Ex: Hortaliça" type="text" id="categoriaCultura">
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Planejamento (Bento 1x1) -->
+            <section
+                class="md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-secondary"
+                        data-icon="calendar_month">calendar_month</span>
+                    <h2 class="font-label-md text-label-md text-on-surface-variant">Planejamento</h2>
+                </div>
+                <div class="flex flex-col gap-gutter">
+                    <div class="flex flex-col gap-1">
+                        <label class="font-label-sm text-label-sm text-on-surface px-1">Data de Plantio</label>
+                        <input
+                            class="w-full h-12 px-4 rounded-lg border border-outline focus:ring-2 focus:ring-secondary focus:border-secondary bg-surface outline-none transition-all font-body-md text-body-md"
+                            type="date" id="dataPlantio">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-label-sm text-label-sm text-on-surface px-1">Previsão de Colheita</label>
+                        <input
+                            class="w-full h-12 px-4 rounded-lg border border-outline focus:ring-2 focus:ring-secondary focus:border-secondary bg-surface outline-none transition-all font-body-md text-body-md"
+                            type="date" id="dataColheita">
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Parâmetros de Cultivo (New Section) -->
+            <section
+                class="md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="material-symbols-outlined text-secondary"
+                        data-icon="settings_input_component">settings_input_component</span>
+                    <h2 class="font-label-md text-label-md text-on-surface-variant">Parâmetros de Cultivo</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- EC Control -->
+                    <div class="flex flex-col gap-3" x-data="{
+                        min: 0, max: 4, step: 0.1,
+                        minValue: 1.5, maxValue: 2.0,
+                        minPercent: 0, maxPercent: 0,
+                        init() {
+                            this.updatePercents();
+                            this.$watch('minValue', value => { 
+                                this.minValue = Math.min(parseFloat(this.minValue), parseFloat(this.maxValue) - this.step);
+                                this.updatePercents(); 
+                            });
+                            this.$watch('maxValue', value => { 
+                                this.maxValue = Math.max(parseFloat(this.maxValue), parseFloat(this.minValue) + this.step);
+                                this.updatePercents(); 
+                            });
+                        },
+                        updatePercents() {
+                            this.minPercent = ((this.minValue - this.min) / (this.max - this.min)) * 100;
+                            this.maxPercent = ((this.maxValue - this.min) / (this.max - this.min)) * 100;
+                        }
+                    }">
+                        <div class="flex justify-between items-center px-1">
+                            <label class="font-label-sm text-label-sm text-on-surface">Condutividade Elétrica
+                                (EC)</label>
+                            <span class="font-label-md text-secondary font-bold"
+                                x-text="parseFloat(minValue).toFixed(1) + ' - ' + parseFloat(maxValue).toFixed(1) + ' mS/cm'"></span>
+                        </div>
+                        <div class="relative pt-4 pb-2">
+                            <div class="h-2 w-full rounded-full flex overflow-hidden bg-outline-variant relative">
+                                <div class="h-full w-1/4 bg-blue-200/40"></div>
+                                <div class="h-full w-2/4 bg-orange-200/40"></div>
+                                <div class="h-full w-1/4 bg-orange-200/40"></div>
+                                <!-- Selected Range Overlay -->
+                                <div class="absolute h-full bg-primary-container rounded-full"
+                                    :style="`left: ${minPercent}%; right: ${100 - maxPercent}%;`">
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-[10px] mt-1 text-on-surface-variant font-medium">
+                                <span>0</span>
+                                <span>2</span>
+                                <span>4</span>
+                            </div>
+                            <!-- Knobs via Range Inputs -->
+                            <input type="range" x-model="minValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-10 cursor-pointer" />
+                            <input type="range" x-model="maxValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-20 cursor-pointer" />
+                        </div>
+                    </div>
+                    <!-- Umidade Alvo -->
+                    <div class="flex flex-col gap-3" x-data="{
+                        min: 0, max: 100, step: 1,
+                        minValue: 60, maxValue: 80,
+                        minPercent: 0, maxPercent: 0,
+                        init() {
+                            this.updatePercents();
+                            this.$watch('minValue', value => { 
+                                this.minValue = Math.min(parseFloat(this.minValue), parseFloat(this.maxValue) - this.step);
+                                this.updatePercents(); 
+                            });
+                            this.$watch('maxValue', value => { 
+                                this.maxValue = Math.max(parseFloat(this.maxValue), parseFloat(this.minValue) + this.step);
+                                this.updatePercents(); 
+                            });
+                        },
+                        updatePercents() {
+                            this.minPercent = ((this.minValue - this.min) / (this.max - this.min)) * 100;
+                            this.maxPercent = ((this.maxValue - this.min) / (this.max - this.min)) * 100;
+                        }
+                    }">
+                        <div class="flex justify-between items-center px-1">
+                            <label class="font-label-sm text-label-sm text-on-surface">Umidade Alvo</label>
+                            <span class="font-label-md text-secondary font-bold"
+                                x-text="Math.round(minValue) + '% - ' + Math.round(maxValue) + '%'"></span>
+                        </div>
+                        <div class="relative pt-4 pb-2">
+                            <div class="h-2 w-full rounded-full bg-outline-variant relative overflow-hidden">
+                                <div class="absolute h-full bg-primary-container rounded-full"
+                                    :style="`left: ${minPercent}%; right: ${100 - maxPercent}%;`">
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-[10px] mt-1 text-on-surface-variant font-medium">
+                                <span>0%</span>
+                                <span>50%</span>
+                                <span>100%</span>
+                            </div>
+                            <!-- Knobs via Range Inputs -->
+                            <input type="range" x-model="minValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-10 cursor-pointer" />
+                            <input type="range" x-model="maxValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-20 cursor-pointer" />
+                        </div>
+                    </div>
+                    <!-- Temperatura Alvo -->
+                    <div class="flex flex-col gap-3" x-data="{
+                        min: 0, max: 50, step: 1,
+                        minValue: 20, maxValue: 28,
+                        minPercent: 0, maxPercent: 0,
+                        init() {
+                            this.updatePercents();
+                            this.$watch('minValue', value => { 
+                                this.minValue = Math.min(parseFloat(this.minValue), parseFloat(this.maxValue) - this.step);
+                                this.updatePercents(); 
+                            });
+                            this.$watch('maxValue', value => { 
+                                this.maxValue = Math.max(parseFloat(this.maxValue), parseFloat(this.minValue) + this.step);
+                                this.updatePercents(); 
+                            });
+                        },
+                        updatePercents() {
+                            this.minPercent = ((this.minValue - this.min) / (this.max - this.min)) * 100;
+                            this.maxPercent = ((this.maxValue - this.min) / (this.max - this.min)) * 100;
+                        }
+                    }">
+                        <div class="flex justify-between items-center px-1">
+                            <label class="font-label-sm text-label-sm text-on-surface">Temperatura Alvo</label>
+                            <span class="font-label-md text-secondary font-bold"
+                                x-text="Math.round(minValue) + '°C - ' + Math.round(maxValue) + '°C'"></span>
+                        </div>
+                        <div class="relative pt-4 pb-2">
+                            <div class="h-2 w-full rounded-full bg-outline-variant relative overflow-hidden">
+                                <div class="absolute h-full bg-primary-container rounded-full"
+                                    :style="`left: ${minPercent}%; right: ${100 - maxPercent}%;`">
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-[10px] mt-1 text-on-surface-variant font-medium">
+                                <span>0°C</span>
+                                <span>25°C</span>
+                                <span>50°C</span>
+                            </div>
+                            <!-- Knobs via Range Inputs -->
+                            <input type="range" x-model="minValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-10 cursor-pointer" />
+                            <input type="range" x-model="maxValue" :min="min" :max="max" :step="step"
+                                class="dual-range absolute top-[20px] w-full -translate-y-1/2 appearance-none bg-transparent pointer-events-none z-20 cursor-pointer" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Notas (Bento 1x1) -->
+            <section
+                class="md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-secondary" data-icon="description">description</span>
+                    <h2 class="font-label-md text-label-md text-on-surface-variant">Notas do Solo e Insumos</h2>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <textarea
+                        class="w-full h-[100px] px-4 py-3 rounded-lg border border-outline focus:ring-2 focus:ring-secondary focus:border-secondary bg-surface outline-none transition-all font-body-md text-body-md resize-none"
+                        placeholder="Descreva as condições iniciais do solo ou insumos aplicados..."></textarea>
+                </div>
+            </section>
+            <!-- Form Actions Footer (Internal layout) -->
+            <div class="md:col-span-12 flex flex-col md:flex-row-reverse gap-4 mt-gutter">
+                <button
+                    class="w-full md:w-auto px-8 h-14 bg-primary-container text-on-primary rounded-lg font-headline-md text-headline-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all"
+                    type="submit">
+                    <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                    Iniciar Cultivo
+                </button>
+                <button onclick="window.location.href='Culturas.html'"
+                    class="w-full md:w-auto px-8 h-14 border-2 border-secondary text-secondary rounded-lg font-headline-md text-headline-md flex items-center justify-center gap-2 hover:bg-surface-container-high active:scale-95 transition-all"
+                    type="button">
+                    <span class="material-symbols-outlined" data-icon="delete_sweep">delete_sweep</span>
+                    Descartar Rascunho
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast-notification" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-error-container text-on-error-container px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-[100] max-w-[90vw] md:max-w-md w-full">
+        <span class="material-symbols-outlined text-[24px]">error</span>
+        <span id="toast-message" class="font-body-md text-body-md font-medium">Preencha todos os campos obrigatórios.</span>
+    </div>
+
+    <script>
+        function mostrarNotificacao(mensagem, erro = true) {
+            const toast = document.getElementById('toast-notification');
+            const toastMessage = document.getElementById('toast-message');
+            const icone = toast.querySelector('.material-symbols-outlined');
+            
+            toastMessage.textContent = mensagem;
+            
+            if (erro) {
+                toast.classList.replace('bg-primary', 'bg-error-container');
+                toast.classList.replace('text-on-primary', 'text-on-error-container');
+                icone.textContent = 'error';
+            } else {
+                toast.classList.replace('bg-error-container', 'bg-primary');
+                toast.classList.replace('text-on-error-container', 'text-on-primary');
+                icone.textContent = 'check_circle';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 4000);
+        }
+
+        function validarFormulario(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            
+            const nome = document.getElementById('nomeCultura').value.trim();
+            const categoria = document.getElementById('categoriaCultura').value.trim();
+            const plantio = document.getElementById('dataPlantio').value;
+            const colheita = document.getElementById('dataColheita').value;
+            
+            const camposFaltando = [];
+            
+            if (!nome) camposFaltando.push('Nome da Cultura');
+            if (!categoria) camposFaltando.push('Categoria');
+            if (!plantio) camposFaltando.push('Data de Plantio');
+            if (!colheita) camposFaltando.push('Previsão de Colheita');
+            
+            if (camposFaltando.length > 0) {
+                mostrarNotificacao('Por favor, preencha: ' + camposFaltando.join(', '));
+                return;
+            }
+            
+            if (new Date(colheita) <= new Date(plantio)) {
+                mostrarNotificacao('A colheita deve ser posterior ao plantio.');
+                return;
+            }
+            
+            mostrarNotificacao('Cultura iniciada com sucesso!', false);
+            
+            // Simular o envio e redirecionar
+            setTimeout(() => {
+                window.location.href = 'Culturas.html';
+            }, 1500);
+        }
+    </script>
+</body>
+
+</html>

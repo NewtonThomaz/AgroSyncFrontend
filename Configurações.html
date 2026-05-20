@@ -12,6 +12,13 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
     <script src="tailwind-config.js"></script>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -163,15 +170,15 @@
                             <p class="font-body-md text-body-md text-on-surface-variant">Escolha o tema visual do
                                 aplicativo.</p>
                             <div class="flex gap-4 w-full">
-                                <button
-                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-primary-container text-on-primary-container border-2 border-primary transition-colors">
-                                    <span class="material-symbols-outlined"
+                                <button id="btn-light-theme" onclick="setTheme('light')"
+                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-primary-container text-on-primary-container border-2 border-primary transition-colors dark:bg-primary-fixed dark:text-on-primary-fixed-variant dark:border-primary-fixed">
+                                    <span class="material-symbols-outlined" id="icon-light-theme"
                                         style="font-variation-settings: 'FILL' 1;">light_mode</span>
                                     <span class="font-label-md text-label-md">Claro</span>
                                 </button>
-                                <button
-                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors">
-                                    <span class="material-symbols-outlined">dark_mode</span>
+                                <button id="btn-dark-theme" onclick="setTheme('dark')"
+                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors dark:bg-surface-container-highest dark:border-outline-variant dark:text-on-surface-variant dark:hover:bg-surface-dim">
+                                    <span class="material-symbols-outlined" id="icon-dark-theme">dark_mode</span>
                                     <span class="font-label-md text-label-md">Escuro</span>
                                 </button>
                             </div>
@@ -273,6 +280,46 @@
                 document.body.classList.remove('overflow-hidden');
             }
         }
+
+        const selectedClass = "flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-primary-container text-on-primary-container border-2 border-primary transition-colors dark:bg-primary-fixed dark:text-on-primary-fixed-variant dark:border-primary-fixed".split(" ");
+        const unselectedClass = "flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors dark:bg-surface-container-highest dark:border-outline-variant dark:text-on-surface-variant dark:hover:bg-surface-dim".split(" ");
+
+        function updateThemeUI(theme) {
+            const btnLight = document.getElementById('btn-light-theme');
+            const btnDark = document.getElementById('btn-dark-theme');
+            const iconLight = document.getElementById('icon-light-theme');
+            const iconDark = document.getElementById('icon-dark-theme');
+
+            if (!btnLight || !btnDark) return;
+
+            if (theme === 'dark') {
+                btnDark.className = selectedClass.join(" ");
+                btnLight.className = unselectedClass.join(" ");
+                iconDark.style.fontVariationSettings = "'FILL' 1";
+                iconLight.style.fontVariationSettings = "'FILL' 0";
+            } else {
+                btnLight.className = selectedClass.join(" ");
+                btnDark.className = unselectedClass.join(" ");
+                iconLight.style.fontVariationSettings = "'FILL' 1";
+                iconDark.style.fontVariationSettings = "'FILL' 0";
+            }
+        }
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            }
+            updateThemeUI(theme);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            updateThemeUI(isDark ? 'dark' : 'light');
+        });
     </script>
 </body>
 

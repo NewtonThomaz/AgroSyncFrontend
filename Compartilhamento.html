@@ -5,10 +5,70 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>AgroSync - Gestão de Compartilhamento</title>
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <script src="tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <!-- Alpine.js para controle reativo total de estado -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1b4332',
+                        'on-primary': '#ffffff',
+                        'primary-container': '#d8f3dc',
+                        'on-primary-container': '#081c15',
+                        'primary-fixed': '#d8f3dc',
+                        'primary-fixed-dim': '#95d5b2',
+                        'on-primary-fixed-variant': '#1b4332',
+                        secondary: '#40916c',
+                        'on-secondary': '#ffffff',
+                        'secondary-container': '#d8f3dc',
+                        'on-secondary-container': '#1b4332',
+                        surface: '#fcfdf9',
+                        'on-surface': '#1a1c1a',
+                        'surface-container': '#f0f1eb',
+                        'surface-container-low': '#f5f6f0',
+                        'surface-container-lowest': '#ffffff',
+                        'surface-container-highest': '#e1e3dc',
+                        'surface-variant': '#dfe4dd',
+                        'on-surface-variant': '#434844',
+                        'surface-dim': '#dadbd4',
+                        outline: '#737974',
+                        'outline-variant': '#c3c8c2',
+                        background: '#f9f9f6',
+                        'on-background': '#1a1c1a',
+                        error: '#ba1a1a',
+                        'error-container': '#ffdad6',
+                        'on-error-container': '#410002',
+                        'tertiary-fixed': '#e2f0d9',
+                        'tertiary': '#52634f'
+                    },
+                    spacing: {
+                        'margin-mobile': '1rem',
+                        'margin-desktop': '2rem',
+                        'bento-gap': '1.5rem',
+                    },
+                    fontSize: {
+                        'headline-lg': ['2rem', '2.5rem'],
+                        'headline-lg-mobile': ['1.75rem', '2.25rem'],
+                        'headline-md': ['1.5rem', '2rem'],
+                        'body-md': ['0.875rem', '1.25rem'],
+                        'label-md': ['0.875rem', '1.25rem'],
+                        'label-sm': ['0.75rem', '1rem'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style type="text/tailwindcss">
         @layer utilities {
             .material-symbols-outlined {
@@ -43,28 +103,6 @@
             display: none !important;
         }
 
-        .dual-range::-webkit-slider-thumb {
-            pointer-events: auto;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 2px solid #1b4332;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
-        .dual-range::-moz-range-thumb {
-            pointer-events: auto;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 2px solid #1b4332;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
         .sidebar-transition {
             transition: transform 0.3s ease-in-out;
         }
@@ -81,46 +119,47 @@
     </style>
 </head>
 
-<body class="bg-background text-on-background font-sans min-h-screen pb-28 md:pb-6 md:pl-64 pt-20" x-data="{ activeProperty: 'all', mobileMenuOpen: false }">
-    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-    <!-- TopAppBar -->
+<body class="bg-background text-on-background font-sans min-h-screen pb-28 md:pb-6 md:pl-64 pt-20" x-data="shareApp()"
+    x-init="initApp()">
+
+    <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" @click="toggleSidebar()"></div>
+
     <header
-        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant transition-colors duration-200">
         <button
-            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
-            onclick="toggleSidebar()">
+            class="md:hidden flex items-center justify-center p-2 text-primary hover:bg-surface-container-low rounded-full transition-colors duration-200"
+            @click="toggleSidebar()">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
         <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
-            <span
-                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+            <span class="font-headline-md text-headline-md font-bold text-primary">AgroSync</span>
         </div>
 
-        <button onclick="window.location.reload()"
-            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+        <button @click="window.location.reload()"
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 hover:bg-surface-container-low rounded-full transition-colors duration-200">
             <span class="material-symbols-outlined">cloud_sync</span>
         </button>
     </header>
-    <!-- NavigationDrawer / Sidebar -->
+
     <aside
-        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container border-r border-outline-variant"
         id="main-sidebar">
         <!-- Close Button (Mobile Only) -->
-        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
+        <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" @click="toggleSidebar()">
             <span class="material-symbols-outlined">close</span>
         </button>
         <!-- Profile Header -->
         <div class="px-6 mb-6 flex items-center gap-3">
             <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
                 <img alt="Avatar" class="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY"
+                    onerror="this.src='https://placehold.co/100x100/1b4332/ffffff?text=JS'">
             </div>
             <div class="overflow-hidden">
                 <p class="font-label-md text-label-md text-on-surface truncate font-semibold">João Silva</p>
-
                 <div class="flex items-center gap-1 mt-0.5">
-                    <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
+                    <div class="w-2 h-2 rounded-full bg-emerald-700"></div>
                     <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
                 </div>
             </div>
@@ -128,80 +167,89 @@
         <div class="mx-4 my-2 border-t border-outline-variant"></div>
         <nav class="flex-1 overflow-y-auto">
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
-                href="Dashboard.html">
+                href="#Dashboard">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="text-label-md font-medium">Dashboard</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="Culturas.html">
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="#Culturas">
                 <span class="material-symbols-outlined">potted_plant</span>
                 <span class="font-label-md text-label-md">Culturas</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="Relatorios.html">
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="#Relatorios">
                 <span class="material-symbols-outlined">assessment</span>
                 <span class="font-label-md text-label-md">Relatórios</span>
             </a>
             <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
-                href="Compartilhamento.html">
+                href="#Compartilhamento">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0.8;">share</span>
                 <span class="font-label-md text-label-md">Compartilhar</span>
             </a>
             <div class="mx-4 my-2 border-t border-outline-variant"></div>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="Perfil.html">
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="#Perfil">
                 <span class="material-symbols-outlined">account_circle</span>
                 <span class="font-label-md text-label-md">Perfil</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="Configurações.html">
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+                href="#Configuracoes">
                 <span class="material-symbols-outlined">settings</span>
                 <span class="font-label-md text-label-md">Configurações</span>
             </a>
         </nav>
     </aside>
-    <!-- BottomNavBar (Mobile) -->
+
     <nav
-        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
-        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Dashboard.html"><span class="material-symbols-outlined text-[24px]"
+        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface border-t border-outline-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+            href="#Dashboard"><span class="material-symbols-outlined text-[24px]"
                 style="font-variation-settings: 'FILL' 1;">dashboard</span><span
-                class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a><a
-            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Culturas.html"><span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
-                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
-            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Relatorios.html"><span class="material-symbols-outlined text-[24px] ">assessment</span><span
-                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
-            class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
-            href="Compartilhamento.html"><span class="material-symbols-outlined text-[24px] ">share</span><span
-                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a><a
-            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
-                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
-            class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
+                class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+            href="#Culturas"><span class="material-symbols-outlined text-[24px]">potted_plant</span><span
+                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+            href="#Relatorios"><span class="material-symbols-outlined text-[24px]">assessment</span><span
+                class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
+            href="#Compartilhamento"><span class="material-symbols-outlined text-[24px]">share</span><span
+                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+            href="#Perfil"><span class="material-symbols-outlined text-[24px]">person</span><span
+                class="font-label-sm text-[10px] mt-0.5">Perfil</span></a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+            href="#Configuracoes"><span class="material-symbols-outlined text-[24px]">settings</span><span
                 class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
     </nav>
 
-    <!-- Main Content Canvas -->
-    <main class="flex-1 flex flex-col h-full relative pt-6 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full">
+    <main
+        class="flex-1 flex flex-col h-full relative pt-6 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full">
         <header class="mb-8 mt-4">
-            <h2 class="text-headline-lg-mobile md:text-headline-lg text-on-surface font-bold mb-2">Gestão de Compartilhamento</h2>
-            <p class="text-body-md text-on-surface-variant leading-relaxed">Gerencie permissões de acesso às suas propriedades rurais. Delegue tarefas de monitoramento ou visualização com segurança.</p>
+            <h2 class="text-headline-lg-mobile md:text-headline-lg text-on-surface font-bold mb-2">Gestão de
+                Compartilhamento</h2>
+            <p class="text-body-md text-on-surface-variant leading-relaxed">Gerencie permissões de acesso às suas
+                propriedades rurais. Delegue tarefas de monitoramento ou visualização com segurança.</p>
         </header>
 
         <!-- Filtros por Chips de Propriedade -->
         <div class="mb-6">
-            <span class="text-label-sm uppercase tracking-wider text-outline font-semibold block mb-2.5">Filtrar por Propriedade:</span>
+            <span class="text-label-sm uppercase tracking-wider text-outline font-semibold block mb-2.5">Filtrar por
+                Propriedade:</span>
             <div class="flex gap-2 overflow-x-auto pb-1.5 w-full">
-                <button @click="activeProperty = 'all'" :class="activeProperty === 'all' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'" class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                <button @click="activeProperty = 'all'; newProp = 'sao_joao'"
+                    :class="activeProperty === 'all' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
                     Todas as Propriedades
                 </button>
-                <button @click="activeProperty = 'sao_joao'" :class="activeProperty === 'sao_joao' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'" class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                <button @click="activeProperty = 'sao_joao'; newProp = 'sao_joao'"
+                    :class="activeProperty === 'sao_joao' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
                     Fazenda São João
                 </button>
-                <button @click="activeProperty = 'esperanca'" :class="activeProperty === 'esperanca' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'" class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                <button @click="activeProperty = 'esperanca'; newProp = 'esperanca'"
+                    :class="activeProperty === 'esperanca' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
                     Sítio Esperança
                 </button>
             </div>
@@ -209,19 +257,22 @@
 
         <!-- Bento Grid Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-bento-gap items-stretch mb-12">
-            
-            <!-- FORMULÁRIO: Adicionar Usuário (Adapta-se ao Filtro Selecionado) -->
-            <section class="lg:col-span-5 bg-surface border border-outline-variant rounded-xl p-6 flex flex-col shadow-[0px_4px_12px_rgba(0,0,0,0.02)] h-fit">
+
+            <!-- FORMULÁRIO: Adicionar Usuário (Reativo ao filtro) -->
+            <section
+                class="lg:col-span-5 bg-surface border border-outline-variant rounded-xl p-6 flex flex-col shadow-[0px_4px_12px_rgba(0,0,0,0.02)] h-fit">
                 <div class="flex items-center gap-2 mb-6">
                     <span class="material-symbols-outlined text-primary">person_add</span>
                     <h3 class="text-headline-md font-bold text-on-surface">Adicionar Usuário</h3>
                 </div>
-                
-                <form id="share-form" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-4">
+
+                <form @submit.prevent="handleFormSubmit()" class="flex flex-col gap-4">
                     <!-- Seletor de Propriedade -->
                     <div class="flex flex-col gap-1.5">
-                        <label class="text-label-md font-semibold text-on-surface" for="property-select">Selecionar Propriedade</label>
-                        <select id="property-select" class="w-full h-12 bg-surface border border-outline-variant rounded-xl px-4 text-body-md focus:ring-2 focus:ring-secondary focus:outline-none transition-all appearance-none pr-8 relative bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%23414844%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_12px_center] bg-[size:18px_18px] bg-no-repeat">
+                        <label class="text-label-md font-semibold text-on-surface" for="property-select">Selecionar
+                            Propriedade</label>
+                        <select id="property-select" x-model="newProp"
+                            class="w-full h-12 bg-surface border border-outline-variant rounded-xl px-4 text-body-md focus:ring-2 focus:ring-secondary focus:outline-none transition-all appearance-none pr-8 relative bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%23414844%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[position:right_12px_center] bg-[size:18px_18px] bg-no-repeat">
                             <option value="sao_joao">Fazenda São João</option>
                             <option value="esperanca">Sítio Esperança</option>
                         </select>
@@ -230,32 +281,40 @@
                     <!-- Input E-mail -->
                     <div class="flex flex-col gap-1.5">
                         <label class="text-label-md font-semibold text-on-surface" for="email">E-mail do usuário</label>
-                        <input id="email" placeholder="exemplo@agrosync.com" type="email" required class="w-full h-12 bg-surface border border-outline-variant rounded-xl px-4 text-body-md focus:ring-2 focus:ring-secondary focus:outline-none transition-all" />
+                        <input id="email" x-model="newEmail" placeholder="exemplo@agrosync.com" type="email" required
+                            class="w-full h-12 bg-surface border border-outline-variant rounded-xl px-4 text-body-md focus:ring-2 focus:ring-secondary focus:outline-none transition-all" />
                     </div>
 
-                    <!-- Nível de Acesso (Tokens de Design Customizados) -->
+                    <!-- Nível de Acesso -->
                     <div class="flex flex-col gap-2 mt-2">
                         <span class="text-label-md font-semibold text-on-surface">Nível de Acesso</span>
-                        
-                        <label class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
-                            <input checked name="role" type="radio" value="Gestor" class="mt-1 text-primary focus:ring-primary h-4 w-4" />
+
+                        <label
+                            class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
+                            <input x-model="newRole" name="role" type="radio" value="Gestor"
+                                class="mt-1 text-primary focus:ring-primary h-4 w-4" />
                             <div class="flex flex-col">
                                 <span class="text-label-md font-bold text-on-surface">Gestor</span>
-                                <span class="text-label-sm text-on-surface-variant">Pode editar dados de sensores, culturas e realizar cadastros locais.</span>
+                                <span class="text-label-sm text-on-surface-variant">Pode editar dados de sensores,
+                                    culturas e realizar cadastros locais.</span>
                             </div>
                         </label>
-                        
-                        <label class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
-                            <input name="role" type="radio" value="Consultor" class="mt-1 text-primary focus:ring-primary h-4 w-4" />
+
+                        <label
+                            class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all has-[:checked]:bg-primary-container/10 has-[:checked]:border-primary shadow-sm">
+                            <input x-model="newRole" name="role" type="radio" value="Consultor"
+                                class="mt-1 text-primary focus:ring-primary h-4 w-4" />
                             <div class="flex flex-col">
                                 <span class="text-label-md font-bold text-on-surface">Consultor</span>
-                                <span class="text-label-sm text-on-surface-variant">Apenas visualização de relatórios e painéis de telemetria.</span>
+                                <span class="text-label-sm text-on-surface-variant">Apenas visualização de relatórios e
+                                    painéis de telemetria.</span>
                             </div>
                         </label>
                     </div>
 
                     <div class="pt-4">
-                        <button type="submit" class="w-full h-12 bg-primary text-on-primary font-bold text-label-md rounded-xl flex justify-center items-center gap-2 hover:opacity-95 active:scale-95 transition-all">
+                        <button type="submit"
+                            class="w-full h-12 bg-primary text-on-primary font-bold text-label-md rounded-xl flex justify-center items-center gap-2 hover:opacity-95 active:scale-95 transition-all">
                             <span class="material-symbols-outlined text-[20px]">send</span>
                             Compartilhar Acesso
                         </button>
@@ -263,12 +322,15 @@
                 </form>
             </section>
 
-            <!-- LISTA DE USUÁRIOS ORGANIZADOS POR PROPRIEDADE -->
             <section class="lg:col-span-7 flex flex-col gap-6">
-                
-                <!-- PROPRIEDADE 1: FAZENDA SÃO JOÃO -->
-                <div id="section-sao-joao" x-show="activeProperty === 'all' || activeProperty === 'sao_joao'" x-transition class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
-                    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+
+                <!-- PROPRIEDADE 1: FAZENDA SÃO JOÃO (overflow-visible para o menu ficar sobreposto) -->
+                <div id="section-sao-joao" x-show="activeProperty === 'all' || activeProperty === 'sao_joao'"
+                    x-transition
+                    class="bg-surface border border-outline-variant rounded-xl overflow-visible shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
+
+                    <div
+                        class="px-6 py-4 rounded-t-xl border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary">agriculture</span>
                             <div>
@@ -276,67 +338,90 @@
                                 <p class="text-[11px] text-outline font-semibold">Ribeirão Preto, SP</p>
                             </div>
                         </div>
-                        <span class="bg-primary-fixed text-on-primary-fixed text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
+                        <span
+                            class="bg-primary-fixed text-on-primary-fixed text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
                     </div>
 
-                    <div id="list-sao-joao" class="flex flex-col divide-y divide-outline-variant/60">
-                        <!-- João Silva (Proprietário - Fixo) -->
-                        <div class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors min-h-[72px]">
-                            <div class="flex items-center gap-4 min-w-0">
-                                <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-label-md shrink-0">
-                                    JS
-                                </div>
-                                <div class="min-w-0">
-                                    <span class="text-label-md font-bold text-on-surface block truncate">João Silva (Você)</span>
-                                    <span class="text-label-sm text-on-surface-variant block truncate">joao.silva@agrosync.com</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 shrink-0">
-                                <span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-semibold">Proprietário</span>
-                                <button class="text-outline p-1.5 rounded-full hover:bg-surface-container transition-colors opacity-40 cursor-not-allowed">
-                                    <span class="material-symbols-outlined">more_vert</span>
-                                </button>
-                            </div>
-                        </div>
+                    <!-- Lista de usuários reativa -->
+                    <div class="flex flex-col divide-y divide-outline-variant/60 rounded-b-xl">
+                        <template x-for="(user, index) in users.filter(u => u.property === 'sao_joao')" :key="user.id">
+                            <div :id="user.id"
+                                :class="user.menuOpen ? 'z-50 relative bg-surface-container-low' : 'z-10 relative hover:bg-surface-container-lowest'"
+                                class="flex items-center justify-between p-4 transition-all min-h-[72px] last:rounded-b-xl">
 
-                        <!-- Mariana Ribeiro (Gestora - Editável/Removível) -->
-                        <div id="user-mariana" x-data="{ menuOpen: false }" class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-all min-h-[72px]">
-                            <div class="flex items-center gap-4 min-w-0">
-                                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md shrink-0">
-                                    MR
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <!-- Avatar pendente ou ativo -->
+                                    <template x-if="user.isPending">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-tertiary-fixed border border-dashed border-tertiary flex items-center justify-center text-tertiary font-bold shrink-0">
+                                            <span class="material-symbols-outlined text-[18px]">mail</span>
+                                        </div>
+                                    </template>
+                                    <template x-if="!user.isPending">
+                                        <div :class="user.isYou ? 'bg-secondary-container text-on-secondary-container' : 'bg-primary-container text-on-primary-container'"
+                                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-label-md shrink-0">
+                                            <span x-text="user.initials"></span>
+                                        </div>
+                                    </template>
+
+                                    <div class="min-w-0">
+                                        <span class="text-label-md font-bold text-on-surface block truncate"
+                                            x-text="user.name"></span>
+                                        <span class="text-label-sm text-on-surface-variant block truncate"
+                                            x-text="user.email"></span>
+                                    </div>
                                 </div>
-                                <div class="min-w-0">
-                                    <span class="text-label-md font-bold text-on-surface block truncate">Mariana Ribeiro</span>
-                                    <span class="text-label-sm text-on-surface-variant block truncate">mariana.gestao@gmail.com</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 shrink-0">
-                                <span class="bg-primary-fixed-dim text-on-primary-fixed-variant px-3 py-1 rounded-full text-label-sm font-semibold">Gestor</span>
-                                <div class="relative">
-                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false" class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
-                                    <div x-show="menuOpen" x-cloak class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20" x-transition>
-                                        <ul class="py-1">
-                                            <li>
-                                                <button @click="menuOpen = false; simulateRoleEdit('Mariana Ribeiro')" class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
-                                                    <span class="material-symbols-outlined text-sm">edit</span> Alterar Nível
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button @click="menuOpen = false; falselyDeleteUser('user-mariana', 'Mariana Ribeiro')" class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
-                                                    <span class="material-symbols-outlined text-sm">delete</span> Excluir Acesso
-                                                </button>
-                                            </li>
-                                        </ul>
+
+                                <div class="flex items-center gap-4 shrink-0">
+                                    <span
+                                        :class="user.role === 'Proprietário' ? 'bg-secondary text-on-secondary' : (user.role === 'Gestor' ? 'bg-primary-fixed-dim text-on-primary-fixed-variant' : 'bg-surface-container-highest text-on-surface-variant border border-outline-variant')"
+                                        class="role-badge px-3 py-1 rounded-full text-label-sm font-semibold"
+                                        x-text="user.role"></span>
+
+                                    <!-- Apenas habilitado para quem não é você mesmo -->
+                                    <div class="relative">
+                                        <button @click="toggleUserMenu(user)" @click.away="user.menuOpen = false"
+                                            :disabled="user.isYou"
+                                            :class="user.isYou ? 'opacity-40 cursor-not-allowed text-outline' : 'text-outline hover:text-on-surface hover:bg-surface-container'"
+                                            class="material-symbols-outlined p-1.5 rounded-full transition-colors">
+                                            more_vert
+                                        </button>
+
+                                        <!-- Dropdown Menu Premium com as funções solicitadas -->
+                                        <div x-show="user.menuOpen" x-cloak
+                                            class="absolute right-0 top-full mt-1 w-52 bg-surface border border-outline-variant rounded-xl shadow-lg z-[100] overflow-hidden"
+                                            x-transition>
+                                            <ul class="py-1">
+                                                <li>
+                                                    <button @click="user.menuOpen = false; openEditRoleModal(user)"
+                                                        class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2 transition-colors">
+                                                        <span class="material-symbols-outlined text-sm">edit</span>
+                                                        <span>Alterar Permissão</span>
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button @click="user.menuOpen = false; deleteUser(user)"
+                                                        class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2 transition-colors">
+                                                        <span
+                                                            class="material-symbols-outlined text-sm">person_remove</span>
+                                                        <span>Desvincular Usuário</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </div>
 
-                <!-- PROPRIEDADE 2: SÍTIO ESPERANÇA -->
-                <div id="section-sitio-esperanca" x-show="activeProperty === 'all' || activeProperty === 'esperanca'" x-transition class="bg-surface border border-outline-variant rounded-xl overflow-hidden shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
-                    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+                <div id="section-sitio-esperanca" x-show="activeProperty === 'all' || activeProperty === 'esperanca'"
+                    x-transition
+                    class="bg-surface border border-outline-variant rounded-xl overflow-visible shadow-[0px_4px_12px_rgba(0,0,0,0.02)]">
+
+                    <div
+                        class="px-6 py-4 rounded-t-xl border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-amber-600">home_work</span>
                             <div>
@@ -344,61 +429,81 @@
                                 <p class="text-[11px] text-outline font-semibold">Londrina, PR</p>
                             </div>
                         </div>
-                        <span class="bg-amber-100 text-amber-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
+                        <span
+                            class="bg-amber-100 text-amber-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
                     </div>
 
-                    <div id="list-esperanca" class="flex flex-col divide-y divide-outline-variant/60">
-                        <!-- João Silva (Proprietário - Fixo) -->
-                        <div class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-colors min-h-[72px]">
-                            <div class="flex items-center gap-4 min-w-0">
-                                <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-label-md shrink-0">
-                                    JS
-                                </div>
-                                <div class="min-w-0">
-                                    <span class="text-label-md font-bold text-on-surface block truncate">João Silva (Você)</span>
-                                    <span class="text-label-sm text-on-surface-variant block truncate">joao.silva@agrosync.com</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 shrink-0">
-                                <span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-semibold">Proprietário</span>
-                                <button class="text-outline p-1.5 rounded-full hover:bg-surface-container transition-colors opacity-40 cursor-not-allowed">
-                                    <span class="material-symbols-outlined">more_vert</span>
-                                </button>
-                            </div>
-                        </div>
+                    <!-- Lista de usuários reativa -->
+                    <div class="flex flex-col divide-y divide-outline-variant/60 rounded-b-xl">
+                        <template x-for="(user, index) in users.filter(u => u.property === 'esperanca')" :key="user.id">
+                            <div :id="user.id"
+                                :class="user.menuOpen ? 'z-50 relative bg-surface-container-low' : 'z-10 relative hover:bg-surface-container-lowest'"
+                                class="flex items-center justify-between p-4 transition-all min-h-[72px] last:rounded-b-xl">
 
-                        <!-- Fernando Souza (Consultor - Editável/Removível) -->
-                        <div id="user-fernando" x-data="{ menuOpen: false }" class="flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-all min-h-[72px]">
-                            <div class="flex items-center gap-4 min-w-0">
-                                <div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-bold text-label-md shrink-0">
-                                    FS
+                                <div class="flex items-center gap-4 min-w-0">
+                                    <!-- Avatar pendente ou ativo -->
+                                    <template x-if="user.isPending">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-tertiary-fixed border border-dashed border-tertiary flex items-center justify-center text-tertiary font-bold shrink-0">
+                                            <span class="material-symbols-outlined text-[18px]">mail</span>
+                                        </div>
+                                    </template>
+                                    <template x-if="!user.isPending">
+                                        <div :class="user.isYou ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-variant text-on-surface-variant'"
+                                            class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-label-md shrink-0">
+                                            <span x-text="user.initials"></span>
+                                        </div>
+                                    </template>
+
+                                    <div class="min-w-0">
+                                        <span class="text-label-md font-bold text-on-surface block truncate"
+                                            x-text="user.name"></span>
+                                        <span class="text-label-sm text-on-surface-variant block truncate"
+                                            x-text="user.email"></span>
+                                    </div>
                                 </div>
-                                <div class="min-w-0">
-                                    <span class="text-label-md font-bold text-on-surface block truncate">Fernando Souza</span>
-                                    <span class="text-label-sm text-on-surface-variant block truncate">fs.agronomia@consultoria.com</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 shrink-0">
-                                <span class="bg-surface-container-highest text-on-surface-variant border border-outline-variant px-3 py-1 rounded-full text-label-sm font-semibold">Consultor</span>
-                                <div class="relative">
-                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false" class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
-                                    <div x-show="menuOpen" x-cloak class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20" x-transition>
-                                        <ul class="py-1">
-                                            <li>
-                                                <button @click="menuOpen = false; simulateRoleEdit('Fernando Souza')" class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
-                                                    <span class="material-symbols-outlined text-sm">edit</span> Alterar Nível
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button @click="menuOpen = false; falselyDeleteUser('user-fernando', 'Fernando Souza')" class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
-                                                    <span class="material-symbols-outlined text-sm">delete</span> Excluir Acesso
-                                                </button>
-                                            </li>
-                                        </ul>
+
+                                <div class="flex items-center gap-4 shrink-0">
+                                    <span
+                                        :class="user.role === 'Proprietário' ? 'bg-secondary text-on-secondary' : (user.role === 'Gestor' ? 'bg-primary-fixed-dim text-on-primary-fixed-variant' : 'bg-surface-container-highest text-on-surface-variant border border-outline-variant')"
+                                        class="role-badge px-3 py-1 rounded-full text-label-sm font-semibold"
+                                        x-text="user.role"></span>
+
+                                    <!-- Apenas habilitado para quem não é você mesmo -->
+                                    <div class="relative">
+                                        <button @click="toggleUserMenu(user)" @click.away="user.menuOpen = false"
+                                            :disabled="user.isYou"
+                                            :class="user.isYou ? 'opacity-40 cursor-not-allowed text-outline' : 'text-outline hover:text-on-surface hover:bg-surface-container'"
+                                            class="material-symbols-outlined p-1.5 rounded-full transition-colors">
+                                            more_vert
+                                        </button>
+
+                                        <!-- Dropdown Menu Premium com as funções solicitadas -->
+                                        <div x-show="user.menuOpen" x-cloak
+                                            class="absolute right-0 top-full mt-1 w-52 bg-surface border border-outline-variant rounded-xl shadow-lg z-[100] overflow-hidden"
+                                            x-transition>
+                                            <ul class="py-1">
+                                                <li>
+                                                    <button @click="user.menuOpen = false; openEditRoleModal(user)"
+                                                        class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2 transition-colors">
+                                                        <span class="material-symbols-outlined text-sm">edit</span>
+                                                        <span>Alterar Permissão</span>
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button @click="user.menuOpen = false; deleteUser(user)"
+                                                        class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2 transition-colors">
+                                                        <span
+                                                            class="material-symbols-outlined text-sm">person_remove</span>
+                                                        <span>Desvincular Usuário</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </div>
 
@@ -406,147 +511,185 @@
         </div>
     </main>
 
+    <div id="role-modal" x-show="isModalOpen" x-cloak
+        class="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center transition-all duration-200">
+        <div class="bg-surface border border-outline-variant rounded-2xl p-6 max-w-sm w-full mx-4 shadow-xl transform transition-all duration-200"
+            id="role-modal-container" @click.away="closeRoleModal()">
+
+            <div class="flex items-center gap-2.5 mb-4">
+                <span class="material-symbols-outlined text-primary">edit_square</span>
+                <h3 class="text-headline-md font-bold text-on-surface">Alterar Cargo</h3>
+            </div>
+
+            <p class="text-body-md text-on-surface-variant mb-4 leading-normal">
+                Selecione o novo nível de acesso para <span class="font-bold text-on-surface"
+                    x-text="selectedUser ? selectedUser.name : ''"></span> nesta propriedade:
+            </p>
+
+            <div class="flex flex-col gap-3">
+                <label
+                    class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all shadow-sm">
+                    <input name="modal-role" type="radio" value="Gestor" x-model="modalRole"
+                        class="mt-1 text-primary focus:ring-primary h-4 w-4" />
+                    <div class="flex flex-col">
+                        <span class="text-label-md font-bold text-on-surface">Gestor</span>
+                        <span class="text-label-sm text-on-surface-variant">Pode editar dados de sensores, culturas e
+                            cadastros locais.</span>
+                    </div>
+                </label>
+                <label
+                    class="flex items-start gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container cursor-pointer transition-all shadow-sm">
+                    <input name="modal-role" type="radio" value="Consultor" x-model="modalRole"
+                        class="mt-1 text-primary focus:ring-primary h-4 w-4" />
+                    <div class="flex flex-col">
+                        <span class="text-label-md font-bold text-on-surface">Consultor</span>
+                        <span class="text-label-sm text-on-surface-variant">Apenas visualização de relatórios e
+                            painéis.</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="flex justify-end gap-2 mt-6">
+                <button @click="closeRoleModal()"
+                    class="px-4 py-2 text-label-sm font-bold text-outline hover:bg-surface-container rounded-lg transition-colors">Cancelar</button>
+                <button @click="saveRoleChange()"
+                    class="px-4 py-2 text-label-sm font-bold bg-primary text-on-primary hover:opacity-95 rounded-lg transition-colors shadow-sm">
+                    Salvar Alterações
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Container das notificações Toast (Premium, flutuante responsivo) -->
-    <div id="toast-container" class="fixed bottom-24 md:bottom-6 right-0 left-0 md:left-auto md:right-6 z-[100] flex flex-col items-center md:items-end gap-2 px-4 pointer-events-none w-full md:w-auto"></div>
+    <div id="toast-container"
+        class="fixed bottom-24 md:bottom-6 right-0 left-0 md:left-auto md:right-6 z-[110] flex flex-col items-center md:items-end gap-2 px-4 pointer-events-none w-full md:w-auto">
+    </div>
 
     <script>
-        // Sincroniza o dropdown do formulário com o clique no chip de filtro
-        document.addEventListener('alpine:init', () => {
-            Alpine.effect(() => {
-                const activeProp = Alpine.store('activeProperty') || 'all';
-                const selectElement = document.getElementById('property-select');
-                if (selectElement && activeProp !== 'all') {
-                    selectElement.value = activeProp;
+        function shareApp() {
+            return {
+                activeProperty: 'all',
+                mobileMenuOpen: false,
+                isModalOpen: false,
+                selectedUser: null,
+                modalRole: 'Gestor',
+                newProp: 'sao_joao',
+                newEmail: '',
+                newRole: 'Gestor',
+                deletedBackup: null,
+
+                // Lista de usuários inicializada via array de estados reativos
+                users: [
+                    { id: 'you-sao-joao', name: 'João Silva', email: 'joao.silva@agrosync.com', role: 'Proprietário', property: 'sao_joao', isYou: true, menuOpen: false, initials: 'JS', isPending: false },
+                    { id: 'mariana', name: 'Mariana Ribeiro', email: 'mariana.gestao@gmail.com', role: 'Gestor', property: 'sao_joao', isYou: false, menuOpen: false, initials: 'MR', isPending: false },
+                    { id: 'you-esperanca', name: 'João Silva', email: 'joao.silva@agrosync.com', role: 'Proprietário', property: 'esperanca', isYou: true, menuOpen: false, initials: 'JS', isPending: false },
+                    { id: 'fernando', name: 'Fernando Souza', email: 'fs.agronomia@consultoria.com', role: 'Consultor', property: 'esperanca', isYou: false, menuOpen: false, initials: 'FS', isPending: false }
+                ],
+
+                initApp() {
+                    // Sincroniza select ao filtrar
+                    this.$watch('activeProperty', value => {
+                        if (value !== 'all') {
+                            this.newProp = value;
+                        }
+                    });
+                },
+
+                toggleSidebar() {
+                    const sidebar = document.getElementById('main-sidebar');
+                    const overlay = document.getElementById('sidebar-overlay');
+                    if (sidebar.classList.contains('sidebar-closed')) {
+                        sidebar.classList.remove('sidebar-closed');
+                        overlay.classList.remove('hidden');
+                        document.body.classList.add('overflow-hidden');
+                    } else {
+                        sidebar.classList.add('sidebar-closed');
+                        overlay.classList.add('hidden');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                },
+
+                toggleUserMenu(user) {
+                    // Fecha outros menus abertos primeiro
+                    this.users.forEach(u => {
+                        if (u.id !== user.id) u.menuOpen = false;
+                    });
+                    user.menuOpen = !user.menuOpen;
+                },
+
+                openEditRoleModal(user) {
+                    this.selectedUser = user;
+                    this.modalRole = user.role;
+                    this.isModalOpen = true;
+                },
+
+                closeRoleModal() {
+                    this.isModalOpen = false;
+                    this.selectedUser = null;
+                },
+
+                saveRoleChange() {
+                    if (this.selectedUser) {
+                        this.selectedUser.role = this.modalRole;
+                        const propName = this.selectedUser.property === 'sao_joao' ? 'Fazenda São João' : 'Sítio Esperança';
+                        showToast(`Nível de acesso de "${this.selectedUser.name}" alterado para ${this.modalRole} na ${propName}!`);
+                        this.closeRoleModal();
+                    }
+                },
+
+                deleteUser(user) {
+                    // Guarda backup para desfazer
+                    this.deletedBackup = { ...user };
+                    this.users = this.users.filter(u => u.id !== user.id);
+
+                    const propName = user.property === 'sao_joao' ? 'Fazenda São João' : 'Sítio Esperança';
+                    showToast(`Acesso de "${user.name}" foi revogado de ${propName}.`, () => {
+                        this.undoDelete();
+                    });
+                },
+
+                undoDelete() {
+                    if (this.deletedBackup) {
+                        this.users.push(this.deletedBackup);
+                        this.deletedBackup = null;
+                        showToast("Ação desfeita com sucesso!");
+                    }
+                },
+
+                handleFormSubmit() {
+                    if (!this.newEmail) return;
+
+                    const id = 'user-' + Date.now();
+                    const newUser = {
+                        id: id,
+                        name: 'Convite Pendente',
+                        email: this.newEmail,
+                        role: this.newRole,
+                        property: this.newProp,
+                        isYou: false,
+                        menuOpen: false,
+                        initials: '?',
+                        isPending: true
+                    };
+
+                    this.users.push(newUser);
+
+                    const propLabel = this.newProp === 'sao_joao' ? 'Fazenda São João' : 'Sítio Esperança';
+                    showToast(`Convite enviado para ${this.newEmail} na propriedade ${propLabel}!`);
+
+                    // Limpa formulário
+                    this.newEmail = '';
                 }
-            });
-        });
-
-        // Função de sidebar controlada de forma idêntica ao trecho enviado
-        function toggleSidebar() {
-            const sidebar = document.getElementById('main-sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            if (sidebar.classList.contains('sidebar-closed')) {
-                sidebar.classList.remove('sidebar-closed');
-                overlay.classList.remove('hidden');
-                document.body.classList.add('overflow-hidden');
-            } else {
-                sidebar.classList.add('sidebar-closed');
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
             }
         }
 
-        // Simula o salvamento de novos convites inserindo-os reativamente na interface
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            const emailInput = document.getElementById('email');
-            const selectProp = document.getElementById('property-select');
-            const selectedRole = document.querySelector('input[name="role"]:checked').value;
-            
-            if (!emailInput || !selectProp) return;
-
-            const email = emailInput.value;
-            const targetProp = selectProp.value;
-            const targetListName = targetProp === 'sao_joao' ? 'list-sao-joao' : 'list-esperanca';
-            const targetList = document.getElementById(targetListName);
-
-            if (!targetList) return;
-
-            const newUserId = 'user-' + Date.now();
-
-            // Cria o elemento do novo usuário com estrutura idêntica
-            const newUserRow = document.createElement('div');
-            newUserRow.id = newUserId;
-            newUserRow.className = "flex items-center justify-between p-4 hover:bg-surface-container-lowest transition-all min-h-[72px] bg-emerald-50/20";
-            
-            newUserRow.setAttribute('x-data', '{ menuOpen: false }');
-
-            newUserRow.innerHTML = `
-                <div class="flex items-center gap-4 min-w-0">
-                    <div class="w-10 h-10 rounded-full bg-tertiary-fixed border border-dashed border-tertiary flex items-center justify-center text-tertiary font-bold text-label-md shrink-0">
-                        <span class="material-symbols-outlined text-[18px]">mail</span>
-                    </div>
-                    <div class="min-w-0">
-                        <span class="text-label-md font-bold text-on-surface block truncate">Convite Pendente</span>
-                        <span class="text-label-sm text-on-surface-variant block truncate">${email}</span>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 shrink-0">
-                    <span class="bg-surface-container-highest text-on-surface-variant border border-outline-variant px-3 py-1 rounded-full text-label-sm font-semibold">${selectedRole}</span>
-                    <div class="relative">
-                        <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false" class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
-                        <div x-show="menuOpen" x-cloak class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20" x-transition>
-                            <ul class="py-1">
-                                <li>
-                                    <button @click="menuOpen = false; falselyDeleteUser('${newUserId}', 'Convite Pendente')" class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-sm">close</span> Cancelar Convite
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            newUserRow.style.opacity = '0';
-            newUserRow.style.transform = 'translateY(-10px)';
-            newUserRow.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            
-            targetList.appendChild(newUserRow);
-
-            setTimeout(() => {
-                newUserRow.style.opacity = '1';
-                newUserRow.style.transform = 'translateY(0)';
-            }, 50);
-
-            emailInput.value = '';
-            showShareToast(`Convite enviado para ${email} com sucesso!`, null);
-        }
-
-        // Simula alteração do nível de acesso com aviso rápido
-        function simulateRoleEdit(userName) {
-            showShareToast(`Nível de acesso de "${userName}" alterado com sucesso!`, null);
-        }
-
-        // Remove o usuário da interface local com fade-out suave
-        function falselyDeleteUser(userId, userName) {
-            const userRow = document.getElementById(userId);
-            if (!userRow) return;
-
-            userRow.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-            userRow.style.opacity = '0';
-            userRow.style.transform = 'scale(0.95)';
-
-            setTimeout(() => {
-                userRow.classList.add('hidden');
-                showShareToast(`Acesso de "${userName}" foi revogado.`, () => {
-                    undoUserDelete(userId);
-                });
-            }, 250);
-        }
-
-        // Desfaz a exclusão restaurando o usuário
-        function undoUserDelete(userId) {
-            const userRow = document.getElementById(userId);
-            if (userRow) {
-                userRow.classList.remove('hidden');
-                setTimeout(() => {
-                    userRow.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-                    userRow.style.opacity = '1';
-                    userRow.style.transform = 'scale(1)';
-                }, 50);
-            }
-        }
-
-        // Toasts premium (Fundo Branco, Verde da marca)
-        function showShareToast(message, undoCallback) {
+        function showToast(message, undoCallback) {
             const container = document.getElementById('toast-container');
             if (!container) return;
-            
+
             const toast = document.createElement('div');
             toast.className = "pointer-events-auto flex flex-col gap-3 bg-surface-container-lowest text-on-surface p-4 rounded-xl shadow-xl transform translate-y-4 opacity-0 transition-all duration-300 w-[calc(100%-32px)] mx-4 md:mx-0 md:w-full md:max-w-sm border-2 border-primary/20";
-            
+
             toast.innerHTML = `
                 <div class="flex items-center gap-2.5">
                     <span class="material-symbols-outlined text-emerald-600 text-2xl leading-none">check_circle</span>
@@ -554,7 +697,7 @@
                 </div>
                 ${undoCallback ? `
                 <div class="flex justify-end gap-2 border-t border-outline-variant/30 pt-2.5 mt-1">
-                    <button class="text-outline hover:text-on-surface text-label-sm font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors" id="toast-undo-share">
+                    <button class="text-outline hover:text-on-surface text-label-sm font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors" id="toast-undo">
                         Desfazer
                     </button>
                 </div>
@@ -563,7 +706,6 @@
 
             container.appendChild(toast);
 
-            // Transição de Entrada
             setTimeout(() => {
                 toast.classList.remove('translate-y-4', 'opacity-0');
             }, 50);
@@ -571,23 +713,22 @@
             let clickHandled = false;
 
             if (undoCallback) {
-                const undoButton = toast.querySelector('#toast-undo-share');
+                const undoButton = toast.querySelector('#toast-undo');
                 undoButton.addEventListener('click', () => {
                     clickHandled = true;
                     undoCallback();
-                    dismissShareToast(toast);
+                    dismissToast(toast);
                 });
             }
 
-            // Auto ocultar após 8 segundos
             setTimeout(() => {
                 if (!clickHandled) {
-                    dismissShareToast(toast);
+                    dismissToast(toast);
                 }
             }, 8000);
         }
 
-        function dismissShareToast(toast) {
+        function dismissToast(toast) {
             toast.classList.add('translate-y-4', 'opacity-0');
             setTimeout(() => {
                 toast.remove();

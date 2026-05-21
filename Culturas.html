@@ -19,7 +19,6 @@
     <style>
         body {
             min-height: max(884px, 100dvh);
-            background-color: #f9f9f6;
             overflow-x: hidden;
         }
 
@@ -50,26 +49,27 @@
 
     <!-- TopAppBar -->
     <header
-        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant transition-colors duration-200">
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
         <button
-            class="md:hidden flex items-center justify-center p-3 text-primary hover:bg-surface-container-low rounded-full transition-colors duration-200"
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
             onclick="toggleSidebar()">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
         <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
-            <span class="font-semibold text-headline-md text-primary tracking-tight">AgroSync</span>
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
         </div>
 
         <button onclick="window.location.reload()"
-            class="ml-auto flex items-center justify-center p-3 text-primary hover:scale-110 rounded-full transition-colors duration-200">
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
             <span class="material-symbols-outlined">cloud_sync</span>
         </button>
     </header>
 
     <!-- NavigationDrawer / Menu Lateral -->
     <aside
-        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container border-r border-outline-variant"
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
         id="main-sidebar">
         <!-- Botão de Fechar (Apenas Mobile) -->
         <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
@@ -89,38 +89,38 @@
                 </span>
             </section>
         </header>
-        <hr class="mx-4 my-2 border-t border-outline-variant">
+        <hr class="mx-4 my-2 border-t border-outline-variant dark:border-on-surface-variant">
         <nav class="flex-1 overflow-y-auto">
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Dashboard.html">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="text-label-md font-medium">Dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
             </a>
-            <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
                 href="Culturas.html">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
-                <span class="text-label-md font-semibold">Culturas</span>
+                <span class="font-label-md text-label-md font-semibold">Culturas</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Relatorios.html">
                 <span class="material-symbols-outlined">assessment</span>
-                <span class="text-label-md font-medium">Relatórios</span>
+                <span class="font-label-md text-label-md">Relatórios</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Compartilhamento.html">
                 <span class="material-symbols-outlined">share</span>
-                <span class="text-label-md font-medium">Compartilhar</span>
+                <span class="font-label-md text-label-md">Compartilhar</span>
             </a>
-            <hr class="mx-4 my-2 border-t border-outline-variant">
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <hr class="mx-4 my-2 border-t border-outline-variant dark:border-on-surface-variant">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Perfil.html">
                 <span class="material-symbols-outlined">account_circle</span>
-                <span class="text-label-md font-medium">Perfil</span>
+                <span class="font-label-md text-label-md">Perfil</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Configurações.html">
                 <span class="material-symbols-outlined">settings</span>
-                <span class="text-label-md font-medium">Configurações</span>
+                <span class="font-label-md text-label-md">Configurações</span>
             </a>
         </nav>
     </aside>
@@ -210,8 +210,8 @@
                         </div>
                     </div>
                     <span
-                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-label-sm font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span> Operacional
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 text-label-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400"></span> Operacional
                     </span>
                 </div>
 
@@ -390,8 +390,8 @@
                         </div>
                     </div>
                     <span
-                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-label-sm font-semibold">
-                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> Atenção
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 text-label-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400 animate-pulse"></span> Atenção
                     </span>
                 </div>
 

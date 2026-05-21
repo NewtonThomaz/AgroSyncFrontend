@@ -44,7 +44,6 @@
     <style>
         body {
             min-height: max(884px, 100dvh);
-            background-color: #f9f9f6;
             overflow-x: hidden;
         }
 
@@ -74,25 +73,26 @@
     <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" @click="toggleSidebar()"></div>
 
     <header
-        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant transition-colors duration-200">
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
         <button
-            class="md:hidden flex items-center justify-center p-2 text-primary hover:bg-surface-container-low rounded-full transition-colors duration-200"
+            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
             @click="toggleSidebar()">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
         <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
-            <span class="font-headline-md text-headline-md font-bold text-primary">AgroSync</span>
+            <span
+                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
         </div>
 
         <button @click="window.location.reload()"
-            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 hover:bg-surface-container-low rounded-full transition-colors duration-200">
+            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
             <span class="material-symbols-outlined">cloud_sync</span>
         </button>
     </header>
 
     <aside
-        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container border-r border-outline-variant"
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
         id="main-sidebar">
         <!-- Close Button (Mobile Only) -->
         <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" @click="toggleSidebar()">
@@ -114,35 +114,35 @@
                 </span>
             </section>
         </header>
-        <hr class="mx-4 my-2 border-t border-outline-variant">
+        <hr class="mx-4 my-2 border-t border-outline-variant dark:border-on-surface-variant">
         <nav class="flex-1 overflow-y-auto">
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Dashboard.html">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="text-label-md font-medium">Dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Culturas.html">
                 <span class="material-symbols-outlined">potted_plant</span>
                 <span class="font-label-md text-label-md">Culturas</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Relatorios.html">
                 <span class="material-symbols-outlined">assessment</span>
                 <span class="font-label-md text-label-md">Relatórios</span>
             </a>
-            <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
                 href="Compartilhamento.html">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">share</span>
                 <span class="font-label-md text-label-md font-semibold">Compartilhar</span>
             </a>
-            <hr class="mx-4 my-2 border-t border-outline-variant">
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <hr class="mx-4 my-2 border-t border-outline-variant dark:border-on-surface-variant">
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Perfil.html">
                 <span class="material-symbols-outlined">account_circle</span>
                 <span class="font-label-md text-label-md">Perfil</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Configurações.html">
                 <span class="material-symbols-outlined">settings</span>
                 <span class="font-label-md text-label-md">Configurações</span>
@@ -151,24 +151,24 @@
     </aside>
 
     <nav
-        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface border-t border-outline-variant">
-        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Dashboard.html"><span class="material-symbols-outlined text-[24px]">dashboard</span><span
                 class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Culturas.html"><span class="material-symbols-outlined text-[24px]">potted_plant</span><span
                 class="font-label-sm text-[10px] mt-0.5">Culturas</span></a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Relatorios.html"><span class="material-symbols-outlined text-[24px]">assessment</span><span
                 class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a>
-        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
             href="Compartilhamento.html"><span class="material-symbols-outlined text-[24px]"
                 style="font-variation-settings: 'FILL' 1;">share</span><span
                 class="font-label-sm text-[10px] mt-0.5 font-semibold">Compartilhar</span></a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Perfil.html"><span class="material-symbols-outlined text-[24px]">person</span><span
                 class="font-label-sm text-[10px] mt-0.5">Perfil</span></a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
+        <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Configurações.html"><span class="material-symbols-outlined text-[24px]">settings</span><span
                 class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
     </nav>
@@ -380,7 +380,7 @@
                             </div>
                         </div>
                         <span
-                            class="bg-amber-100 text-amber-800 text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
+                            class="bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 text-[11px] font-bold px-3 py-1 rounded-full uppercase">Ativos</span>
                     </div>
 
                     <!-- Lista de usuários reativa -->

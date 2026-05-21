@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Termos de Uso - AgroSync</title>
+    <!-- Google Fonts & Material Symbols -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <!-- Tailwind CSS & AgroSync Config -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="tailwind-config.js"></script>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+    <!-- Header -->
+    <header class="w-full bg-surface border-b border-outline-variant py-4 px-margin-mobile md:px-margin-desktop flex items-center justify-between sticky top-0 z-30 shadow-sm">
+        <nav class="flex items-center gap-3 text-primary">
+            <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+            <span class="font-headline-md font-bold">AgroSync</span>
+        </nav>
+        <nav class="flex items-center">
+            <button onclick="window.history.back()" class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-2" type="button">
+                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                <span>Voltar</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-start justify-center py-margin-desktop px-margin-mobile md:px-margin-desktop bg-surface-container-low overflow-y-auto">
+        <article class="w-full max-w-4xl bg-surface border border-outline-variant rounded-xl p-8 shadow-sm flex flex-col gap-6">
+            <!-- Title & Metadata -->
+            <header class="border-b border-outline-variant pb-6 flex flex-col gap-2">
+                <h1 class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed">Termos de Uso</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Última atualização: 21 de Maio de 2026</p>
+            </header>
+
+            <!-- Document Content Sections -->
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">1. Aceitação dos Termos</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Ao criar uma conta ou utilizar os serviços do AgroSync, você concorda expressamente em cumprir e ser regido por estes Termos de Uso. Esta plataforma destina-se ao gerenciamento de estufas inteligentes e monitoramento agrícola de alta precisão. Caso não concorde com qualquer disposição aqui estabelecida, solicitamos que não utilize nossos sistemas.
+                </p>
+            </section>
+
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">2. Funcionamento Offline-First e Stack IoT</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    O AgroSync opera sob a filosofia offline-first, garantindo a gravação local de todos os dados de telemetria mesmo sem conectividade imediata com a internet. A integração de Internet das Coisas (IoT) envolve dispositivos baseados em microcontroladores ESP32 equipados com sensores de temperatura, umidade (DHT22) e condutividade elétrica (EC). Os dados são transmitidos localmente via HTTP POST para o nosso servidor ou armazenados temporariamente no cache do navegador (PWA), sendo sincronizados com o backend na nuvem assim que uma conexão de rede estável for restabelecida.
+                </p>
+            </section>
+
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">3. Controle de Acesso e Perfis</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    O acesso à plataforma é estritamente controlado e validado por nossa tabela interna de colaboradores. Os níveis de acesso definidos no sistema e aceitos por este termo de forma intransferível são:
+                </p>
+                <ul class="list-disc pl-6 flex flex-col gap-2 font-body-md text-body-md text-on-surface-variant">
+                    <li><strong class="text-on-surface">Root:</strong> Acesso total às configurações de infraestrutura corporativa, alteração de permissões administrativas de segurança e auditoria global do sistema.</li>
+                    <li><strong class="text-on-surface">Adm (Administrador):</strong> Permissão operacional plena para gerenciar culturas, estufas, limites de sensores, propriedades físicas e gestão de outros colaboradores vinculados à propriedade.</li>
+                    <li><strong class="text-on-surface">View (Visualizador):</strong> Acesso somente-leitura voltado a operadores e agrônomos de campo para acompanhamento diário de dashboards e emissão de relatórios simples.</li>
+                </ul>
+            </section>
+
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">4. Coleta de Telemetria e Notificações Push</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Toda telemetria coletada pelo sistema (como leituras de condutividade elétrica) exige o registro de dois marcadores temporais obrigatórios: a <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">dataHora</code> (momento real aferido pelos sensores na estufa física) e o <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">sincronizadoEm</code> (momento de entrada e persistência dos dados no banco de dados central). O AgroSync monitora rigorosamente se o <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">valorEC</code> ultrapassa os limites mínimo (<code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMin</code>) ou máximo (<code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMax</code>) configurados para a cultura monitorada, disparando notificações push emergenciais via Firebase Admin SDK aos dispositivos cadastrados sempre que os limites forem extrapolados.
+                </p>
+            </section>
+
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">5. Limitação de Responsabilidades</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Você é inteiramente responsável pela confidencialidade e segurança dos seus dados de acesso (UUID do Colaborador) e pela calibração e manutenção corretas do seu hardware local (placas ESP32, sensores DHT22 e de condutividade elétrica). O AgroSync oferece ferramentas de monitoramento preditivo e alertas de estufa, mas não assume qualquer responsabilidade direta por perdas ou danos a colheitas decorrentes de falhas mecânicas locais, imperícia de calibragem física ou vazamento de credenciais administrativas.
+                </p>
+            </section>
+
+            <section class="flex flex-col gap-4">
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">6. Modificações dos Termos</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    O AgroSync reserva-se o direito de atualizar e alterar estes Termos de Uso periodicamente para refletir melhorias no sistema, mudanças arquiteturais de hardware ou novos requisitos regulatórios. O uso continuado da plataforma após quaisquer atualizações constitui sua aceitação dos novos termos.
+                </p>
+            </section>
+
+            <!-- Footer -->
+            <footer class="border-t border-outline-variant pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                <span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 AgroSync. Todos os direitos reservados.</span>
+                <span class="font-body-sm text-body-sm text-primary dark:text-primary-fixed font-medium">Offline-First Precision Agriculture</span>
+            </footer>
+        </article>
+    </main>
+</body>
+
+</html>

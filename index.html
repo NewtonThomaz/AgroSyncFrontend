@@ -83,7 +83,7 @@
                             operações da sua fazenda</p>
                     </header>
                     <!-- Form -->
-                    <form class="flex flex-col gap-4">
+                    <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); window.location.href='Dashboard.html';">
                         <div class="flex flex-col gap-2">
                             <label class="font-label-md text-label-md text-on-surface" for="email">Endereço de
                                 E-mail</label>
@@ -108,8 +108,7 @@
                                 </button>
                             </div>
                         </div>
-                        <button onclick="window.location.href='Dashboard.html'"
-                            class="w-full h-12 mt-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2"
+                        <button class="w-full h-12 mt-2 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2"
                             type="submit">Entrar <span class="material-symbols-outlined">arrow_forward</span></button>
                     </form>
                     <!-- Divider -->

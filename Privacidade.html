@@ -3,13 +3,16 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Política de Privacidade - AgroSync</title>
     <!-- Google Fonts & Material Symbols -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
     <!-- Tailwind CSS & AgroSync Config -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="tailwind-config.js"></script>
@@ -17,13 +20,16 @@
 
 <body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
     <!-- Header -->
-    <header class="w-full bg-surface border-b border-outline-variant py-4 px-margin-mobile md:px-margin-desktop flex items-center justify-between sticky top-0 z-30 shadow-sm">
+    <header
+        class="w-full bg-surface border-b border-outline-variant py-4 px-margin-mobile md:px-margin-desktop flex items-center justify-between sticky top-0 z-30 shadow-sm">
         <nav class="flex items-center gap-3 text-primary">
             <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
             <span class="font-headline-md font-bold">AgroSync</span>
         </nav>
         <nav class="flex items-center">
-            <button onclick="window.history.back()" class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-2" type="button">
+            <button onclick="window.history.back()"
+                class="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center gap-2"
+                type="button">
                 <span class="material-symbols-outlined text-[18px]">arrow_back</span>
                 <span>Voltar</span>
             </button>
@@ -31,61 +37,107 @@
     </header>
 
     <!-- Main Container -->
-    <main class="flex-grow flex items-start justify-center py-margin-desktop px-margin-mobile md:px-margin-desktop bg-surface-container-low overflow-y-auto">
-        <article class="w-full max-w-4xl bg-surface border border-outline-variant rounded-xl p-8 shadow-sm flex flex-col gap-6">
+    <main
+        class="flex-grow flex items-start justify-center py-margin-desktop px-margin-mobile md:px-margin-desktop bg-surface-container-low overflow-y-auto">
+        <article
+            class="w-full max-w-4xl bg-surface border border-outline-variant rounded-xl p-8 shadow-sm flex flex-col gap-6">
             <!-- Title & Metadata -->
             <header class="border-b border-outline-variant pb-6 flex flex-col gap-2">
-                <h1 class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed">Política de Privacidade</h1>
+                <h1 class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed">Política de
+                    Privacidade</h1>
                 <p class="font-body-md text-body-md text-on-surface-variant">Última atualização: 21 de Maio de 2026</p>
             </header>
 
             <!-- Document Content Sections -->
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">1. Coleta de Dados e Telemetria</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">1. Coleta
+                    de Dados e Telemetria</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    No AgroSync, nós coletamos informações cruciais para garantir a excelência técnica e a produtividade de suas estufas inteligentes. Coletamos ativamente dados de leituras de sensores de nossa stack IoT, contendo parâmetros ambientais precisos tais como temperatura, umidade relativa do ar (aferidas pelos sensores DHT22) e condutividade elétrica da solução de irrigação (<code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">valorEC</code>) captada via sondas locais conectadas aos microcontroladores ESP32.
+                    No AgroSync, nós coletamos informações cruciais para garantir a excelência técnica e a produtividade
+                    de suas estufas inteligentes. Coletamos ativamente dados de leituras de sensores de nossa stack IoT,
+                    contendo parâmetros ambientais precisos tais como temperatura, umidade relativa do ar (aferidas
+                    pelos sensores DHT22) e condutividade elétrica da solução de irrigação (<code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">valorEC</code>)
+                    captada via sondas locais conectadas aos microcontroladores ESP32.
                 </p>
             </section>
 
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">2. Armazenamento e Caching Offline-First</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">2.
+                    Armazenamento e Caching Offline-First</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    Priorizando a resiliência no campo e o suporte offline-first a locais de conectividade instável, o AgroSync registra localmente em cache interno do navegador (via tecnologias de Progressive Web Apps - PWA) toda a telemetria produzida antes do envio ao servidor. Quando uma conexão com a internet é estabelecida, os dados são sincronizados no banco de dados relacional e marcados estritamente com dois timestamps fundamentais: a <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">dataHora</code> (momento do registro físico na estufa) e o <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">sincronizadoEm</code> (momento de entrada nos servidores backend).
+                    Priorizando a resiliência no campo e o suporte offline-first a locais de conectividade instável, o
+                    AgroSync registra localmente em cache interno do navegador (via tecnologias de Progressive Web Apps
+                    - PWA) toda a telemetria produzida antes do envio ao servidor. Quando uma conexão com a internet é
+                    estabelecida, os dados são sincronizados no banco de dados relacional e marcados estritamente com
+                    dois timestamps fundamentais: a <code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">dataHora</code>
+                    (momento do registro físico na estufa) e o <code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">sincronizadoEm</code>
+                    (momento de entrada nos servidores backend).
                 </p>
             </section>
 
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">3. Tratamento de UUIDs como BINARY(16)</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">3.
+                    Tratamento de UUIDs como BINARY(16)</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    Em conformidade estrita com nossa arquitetura robusta e políticas de proteção de dados, todos os identificadores pessoais de colaboradores e chaves estrangeiras vinculando fazendas, estufas e sensores são gerados estritamente no padrão UUID. Para otimização de processamento, performance relacional e segurança de criptografia física no banco de dados (MySQL em desenvolvimento e PostgreSQL via Supabase em produção), estas informações são armazenadas estritamente sob o tipo de dado <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">BINARY(16)</code>.
+                    Em conformidade estrita com nossa arquitetura robusta e políticas de proteção de dados, todos os
+                    identificadores pessoais de colaboradores e chaves estrangeiras vinculando fazendas, estufas e
+                    sensores são gerados estritamente no padrão UUID. Para otimização de processamento, performance
+                    relacional e segurança de criptografia física no banco de dados (MySQL em desenvolvimento e
+                    PostgreSQL via Supabase em produção), estas informações são armazenadas estritamente sob o tipo de
+                    dado <code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">BINARY(16)</code>.
                 </p>
             </section>
 
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">4. Finalidade e Push Notifications</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">4.
+                    Finalidade e Push Notifications</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    Os dados de telemetria das culturas cadastrados no sistema servem para acionar diagnósticos automáticos e alertas em tempo real. Se o nível de condutividade elétrica monitorado (<code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">valorEC</code>) ultrapassar os limites de segurança (<code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMin</code> ou <code class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMax</code>) cadastrados na cultura de referência, o AgroSync dispara Push Notifications emergenciais por meio do Firebase Admin SDK.
+                    Os dados de telemetria das culturas cadastrados no sistema servem para acionar diagnósticos
+                    automáticos e alertas em tempo real. Se o nível de condutividade elétrica monitorado (<code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">valorEC</code>)
+                    ultrapassar os limites de segurança (<code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMin</code>
+                    ou <code
+                        class="bg-surface-container-high px-2 py-1 rounded text-primary dark:text-primary-fixed">ceMax</code>)
+                    cadastrados na cultura de referência, o AgroSync dispara Push Notifications emergenciais por meio do
+                    Firebase Admin SDK.
                 </p>
             </section>
 
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">5. Observabilidade e Monitoramento de Erros</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">5.
+                    Observabilidade e Monitoramento de Erros</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    Para garantir alta disponibilidade, integridade contra falhas de sincronismo e otimização da performance offline do aplicativo, coletamos logs anônimos de requisições web e telemetria de erro por meio de nossas ferramentas corporativas de observabilidade de backend (Spring Boot Actuator, Prometheus e painéis do Grafana). Estes dados são utilizados puramente para fins estatísticos e melhoria técnica.
+                    Para garantir alta disponibilidade, integridade contra falhas de sincronismo e otimização da
+                    performance offline do aplicativo, coletamos logs anônimos de requisições web e telemetria de erro
+                    por meio de nossas ferramentas corporativas de observabilidade de backend (Spring Boot Actuator,
+                    Prometheus e painéis do Grafana). Estes dados são utilizados puramente para fins estatísticos e
+                    melhoria técnica.
                 </p>
             </section>
 
             <section class="flex flex-col gap-4">
-                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">6. Compartilhamento e Direitos (LGPD)</h2>
+                <h2 class="font-headline-md text-headline-md text-on-surface border-l-4 border-primary pl-3">6.
+                    Compartilhamento e Direitos (LGPD)</h2>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    O AgroSync respeita integralmente a Lei Geral de Proteção de Dados (LGPD). Nós não compartilhamos informações de colaboradores ou telemetria de estufas com terceiros para fins publicitários. Você pode requisitar a qualquer momento a exclusão ou exportação dos seus dados pessoais por meio de sua conta corporativa vinculada aos níveis de permissão adequados.
+                    O AgroSync respeita integralmente a Lei Geral de Proteção de Dados (LGPD). Nós não compartilhamos
+                    informações de colaboradores ou telemetria de estufas com terceiros para fins publicitários. Você
+                    pode requisitar a qualquer momento a exclusão ou exportação dos seus dados pessoais por meio de sua
+                    conta corporativa vinculada aos níveis de permissão adequados.
                 </p>
             </section>
 
             <!-- Footer -->
-            <footer class="border-t border-outline-variant pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-                <span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 AgroSync. Todos os direitos reservados.</span>
-                <span class="font-body-sm text-body-sm text-primary dark:text-primary-fixed font-medium">Privacidade e Tecnologia Agrícola</span>
+            <footer
+                class="border-t border-outline-variant pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                <span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 AgroSync. Todos os direitos
+                    reservados.</span>
+                <span class="font-body-sm text-body-sm text-primary dark:text-primary-fixed font-medium">Privacidade e
+                    Tecnologia Agrícola</span>
             </footer>
         </article>
     </main>

@@ -6,6 +6,7 @@
 <body class="bg-background text-on-surface min-h-screen flex flex-col">
 
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>AgroSync - Cadastrar Nova Cultura</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -88,7 +89,8 @@
             <p class="font-body-md text-body-md text-on-surface-variant">Preencha os detalhes para iniciar o
                 monitoramento inteligente.</p>
         </div>
-        <form id="form-cultura" class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap" onsubmit="validarFormulario(event)" novalidate>
+        <form id="form-cultura" class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap"
+            onsubmit="validarFormulario(event)" novalidate>
             <!-- Section: Informações do Cultivo (Bento 2x1) -->
             <section
                 class="md:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm">
@@ -317,9 +319,11 @@
     </main>
 
     <!-- Notification Toast -->
-    <div id="toast-notification" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-error-container text-on-error-container px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-[100] max-w-[90vw] md:max-w-md w-full">
+    <div id="toast-notification"
+        class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-error-container text-on-error-container px-6 py-4 rounded-lg shadow-xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-[100] max-w-[90vw] md:max-w-md w-full">
         <span class="material-symbols-outlined text-[24px]">error</span>
-        <span id="toast-message" class="font-body-md text-body-md font-medium">Preencha todos os campos obrigatórios.</span>
+        <span id="toast-message" class="font-body-md text-body-md font-medium">Preencha todos os campos
+            obrigatórios.</span>
     </div>
 
     <script>
@@ -327,9 +331,9 @@
             const toast = document.getElementById('toast-notification');
             const toastMessage = document.getElementById('toast-message');
             const icone = toast.querySelector('.material-symbols-outlined');
-            
+
             toastMessage.textContent = mensagem;
-            
+
             if (erro) {
                 toast.classList.replace('bg-primary', 'bg-error-container');
                 toast.classList.replace('text-on-primary', 'text-on-error-container');
@@ -341,7 +345,7 @@
             }
 
             toast.classList.remove('translate-y-20', 'opacity-0');
-            
+
             setTimeout(() => {
                 toast.classList.add('translate-y-20', 'opacity-0');
             }, 4000);
@@ -349,31 +353,31 @@
 
         function validarFormulario(event) {
             event.preventDefault(); // Impede o envio padrão do formulário
-            
+
             const nome = document.getElementById('nomeCultura').value.trim();
             const categoria = document.getElementById('categoriaCultura').value.trim();
             const plantio = document.getElementById('dataPlantio').value;
             const colheita = document.getElementById('dataColheita').value;
-            
+
             const camposFaltando = [];
-            
+
             if (!nome) camposFaltando.push('Nome da Cultura');
             if (!categoria) camposFaltando.push('Categoria');
             if (!plantio) camposFaltando.push('Data de Plantio');
             if (!colheita) camposFaltando.push('Previsão de Colheita');
-            
+
             if (camposFaltando.length > 0) {
                 mostrarNotificacao('Por favor, preencha: ' + camposFaltando.join(', '));
                 return;
             }
-            
+
             if (new Date(colheita) <= new Date(plantio)) {
                 mostrarNotificacao('A colheita deve ser posterior ao plantio.');
                 return;
             }
-            
+
             mostrarNotificacao('Cultura iniciada com sucesso!', false);
-            
+
             // Simular o envio e redirecionar
             setTimeout(() => {
                 window.location.href = 'Culturas.html';

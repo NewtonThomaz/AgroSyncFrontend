@@ -81,8 +81,8 @@
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
             </div>
             <div class="overflow-hidden">
-                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
-                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">João Silva</p>
+
                 <div class="flex items-center gap-1 mt-0.5">
                     <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
                     <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
@@ -91,11 +91,10 @@
         </div>
         <div class="mx-4 my-2 border-t border-outline-variant"></div>
         <nav class="flex-1 overflow-y-auto">
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Dashboard.html">
-                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
-                    dashboard</span>
-                <span class="font-label-md text-label-md">Dashboard</span>
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-label-md font-medium">Dashboard</span>
             </a>
             <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
                 href="Culturas.html">
@@ -118,15 +117,16 @@
                 <span class="material-symbols-outlined">account_circle</span>
                 <span class="font-label-md text-label-md">Perfil</span>
             </a>
-            <a class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-lg px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
                 href="Configurações.html">
-                <span class="material-symbols-outlined">settings</span>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
                 <span class="font-label-md text-label-md">Configurações</span>
             </a>
         </nav>
     </aside>
     <!-- BottomNavBar (Mobile) -->
-    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+    <nav
+        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
         <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
                 style="font-variation-settings: 'FILL' 1;">dashboard</span><span
@@ -149,122 +149,121 @@
     </nav>
     <!-- Main Content -->
     <main class="pt-20 px-margin-mobile md:px-margin-desktop md:pt-8 max-w-4xl mx-auto">
-            <div class="max-w-4xl mx-auto flex flex-col gap-bento-gap">
-                <!-- Page Header -->
-                <div class="mt-10">
-                    <h2
-                        class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
-                        Configurações</h2>
-                    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Personalize sua experiência no
-                        AgroSync.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
-                    <!-- Aparência Card -->
-                    <section
-                        class="md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-primary">palette</span>
-                            <h3 class="font-headline-md text-headline-md text-on-surface">Aparência</h3>
-                        </div>
-                        <div class="flex flex-col gap-4">
-                            <p class="font-body-md text-body-md text-on-surface-variant">Escolha o tema visual do
-                                aplicativo.</p>
-                            <div class="flex gap-4 w-full">
-                                <button id="btn-light-theme" onclick="setTheme('light')"
-                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-primary-container text-on-primary-container border-2 border-primary transition-colors dark:bg-primary-fixed dark:text-on-primary-fixed-variant dark:border-primary-fixed">
-                                    <span class="material-symbols-outlined" id="icon-light-theme"
-                                        style="font-variation-settings: 'FILL' 1;">light_mode</span>
-                                    <span class="font-label-md text-label-md">Claro</span>
-                                </button>
-                                <button id="btn-dark-theme" onclick="setTheme('dark')"
-                                    class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors dark:bg-surface-container-highest dark:border-outline-variant dark:text-on-surface-variant dark:hover:bg-surface-dim">
-                                    <span class="material-symbols-outlined" id="icon-dark-theme">dark_mode</span>
-                                    <span class="font-label-md text-label-md">Escuro</span>
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                    <!-- Idioma & Privacidade Card -->
-                    <section
-                        class="md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="material-symbols-outlined text-primary">settings_applications</span>
-                            <h3 class="font-headline-md text-headline-md text-on-surface">Geral</h3>
-                        </div>
-                        <div class="flex flex-col">
-                            <button
-                                class="flex items-center justify-between py-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors px-2 -mx-2 rounded-lg group">
-                                <div class="flex items-center gap-4">
-                                    <span
-                                        class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">language</span>
-                                    <div class="flex flex-col items-start">
-                                        <span
-                                            class="font-body-md text-body-md text-on-surface font-medium">Idioma</span>
-                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Português
-                                            (Brasil)</span>
-                                    </div>
-                                </div>
-                                <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
-                            </button>
-                            <button
-                                class="flex items-center justify-between py-4 hover:bg-surface-container-low transition-colors px-2 -mx-2 rounded-lg group">
-                                <div class="flex items-center gap-4">
-                                    <span
-                                        class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shield</span>
-                                    <div class="flex flex-col items-start">
-                                        <span
-                                            class="font-body-md text-body-md text-on-surface font-medium">Privacidade</span>
-                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Segurança e
-                                            dados</span>
-                                    </div>
-                                </div>
-                                <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
-                            </button>
-                        </div>
-                    </section>
-                    <!-- Notificações Card -->
-                    <section
-                        class="col-span-1 md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-primary">notifications</span>
-                            <h3 class="font-headline-md text-headline-md text-on-surface">Notificações</h3>
-                        </div>
-                        <div class="flex flex-col w-full">
-                            <!-- Toggle Push -->
-                            <div class="flex items-center justify-between py-4 border-b border-outline-variant">
-                                <div class="flex flex-col">
-                                    <span class="font-body-md text-body-md text-on-surface font-medium">Notificações
-                                        Push</span>
-                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Alertas em tempo
-                                        real no dispositivo</span>
-                                </div>
-                                <button
-                                    class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1 transition-colors">
-                                    <div
-                                        class="w-4 h-4 bg-on-primary rounded-full transform translate-x-6 transition-transform shadow-sm">
-                                    </div>
-                                </button>
-                            </div>
-                            <!-- Toggle Email -->
-                            <div class="flex items-center justify-between py-4">
-                                <div class="flex flex-col">
-                                    <span class="font-body-md text-body-md text-on-surface font-medium">Notificações por
-                                        E-mail</span>
-                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Relatórios
-                                        semanais e atualizações</span>
-                                </div>
-                                <button
-                                    class="w-12 h-6 bg-surface-variant rounded-full relative flex items-center px-1 transition-colors">
-                                    <div
-                                        class="w-4 h-4 bg-outline rounded-full transform translate-x-0 transition-transform shadow-sm">
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+        <div class="max-w-4xl mx-auto flex flex-col gap-bento-gap">
+            <!-- Page Header -->
+            <div class="mt-10">
+                <h2
+                    class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
+                    Configurações</h2>
+                <p class="font-body-md text-body-md text-on-surface-variant mt-1">Personalize sua experiência no
+                    AgroSync.</p>
             </div>
-        </main>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
+                <!-- Aparência Card -->
+                <section
+                    class="md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">palette</span>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Aparência</h3>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <p class="font-body-md text-body-md text-on-surface-variant">Escolha o tema visual do
+                            aplicativo.</p>
+                        <div class="flex gap-4 w-full">
+                            <button id="btn-light-theme" onclick="setTheme('light')"
+                                class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-primary-container text-on-primary-container border-2 border-primary transition-colors dark:bg-primary-fixed dark:text-on-primary-fixed-variant dark:border-primary-fixed">
+                                <span class="material-symbols-outlined" id="icon-light-theme"
+                                    style="font-variation-settings: 'FILL' 1;">light_mode</span>
+                                <span class="font-label-md text-label-md">Claro</span>
+                            </button>
+                            <button id="btn-dark-theme" onclick="setTheme('dark')"
+                                class="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low transition-colors dark:bg-surface-container-highest dark:border-outline-variant dark:text-on-surface-variant dark:hover:bg-surface-dim">
+                                <span class="material-symbols-outlined" id="icon-dark-theme">dark_mode</span>
+                                <span class="font-label-md text-label-md">Escuro</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <!-- Idioma & Privacidade Card -->
+                <section
+                    class="md:col-span-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="material-symbols-outlined text-primary">settings_applications</span>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Geral</h3>
+                    </div>
+                    <div class="flex flex-col">
+                        <button
+                            class="flex items-center justify-between py-4 border-b border-outline-variant hover:bg-surface-container-low transition-colors px-2 -mx-2 rounded-lg group">
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">language</span>
+                                <div class="flex flex-col items-start">
+                                    <span class="font-body-md text-body-md text-on-surface font-medium">Idioma</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Português
+                                        (Brasil)</span>
+                                </div>
+                            </div>
+                            <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-between py-4 hover:bg-surface-container-low transition-colors px-2 -mx-2 rounded-lg group">
+                            <div class="flex items-center gap-4">
+                                <span
+                                    class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">shield</span>
+                                <div class="flex flex-col items-start">
+                                    <span
+                                        class="font-body-md text-body-md text-on-surface font-medium">Privacidade</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant">Segurança e
+                                        dados</span>
+                                </div>
+                            </div>
+                            <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+                        </button>
+                    </div>
+                </section>
+                <!-- Notificações Card -->
+                <section
+                    class="col-span-1 md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-6 shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">notifications</span>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">Notificações</h3>
+                    </div>
+                    <div class="flex flex-col w-full">
+                        <!-- Toggle Push -->
+                        <div class="flex items-center justify-between py-4 border-b border-outline-variant">
+                            <div class="flex flex-col">
+                                <span class="font-body-md text-body-md text-on-surface font-medium">Notificações
+                                    Push</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">Alertas em tempo
+                                    real no dispositivo</span>
+                            </div>
+                            <button
+                                class="w-12 h-6 bg-primary rounded-full relative flex items-center px-1 transition-colors">
+                                <div
+                                    class="w-4 h-4 bg-on-primary rounded-full transform translate-x-6 transition-transform shadow-sm">
+                                </div>
+                            </button>
+                        </div>
+                        <!-- Toggle Email -->
+                        <div class="flex items-center justify-between py-4">
+                            <div class="flex flex-col">
+                                <span class="font-body-md text-body-md text-on-surface font-medium">Notificações por
+                                    E-mail</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">Relatórios
+                                    semanais e atualizações</span>
+                            </div>
+                            <button
+                                class="w-12 h-6 bg-surface-variant rounded-full relative flex items-center px-1 transition-colors">
+                                <div
+                                    class="w-4 h-4 bg-outline rounded-full transform translate-x-0 transition-transform shadow-sm">
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('main-sidebar');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html class="light" lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
@@ -11,36 +11,20 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
         rel="stylesheet">
-    <script src="tailwind-config.js"></script>
+
+
+    <script src="tailwind-config.js" onerror="console.warn('Usando configuração de fallback integrada.')"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <style>
         body {
             min-height: max(884px, 100dvh);
+            background-color: #f9f9f6;
+            overflow-x: hidden;
         }
 
         [x-cloak] {
             display: none !important;
-        }
-
-        .dual-range::-webkit-slider-thumb {
-            pointer-events: auto;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 2px solid #1b4332;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
-        .dual-range::-moz-range-thumb {
-            pointer-events: auto;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border: 2px solid #1b4332;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
         .sidebar-transition {
@@ -59,45 +43,47 @@
     </style>
 </head>
 
-<body class="bg-background text-on-background font-body-md text-body-md min-h-screen">
-    <!-- Overlay for Mobile Sidebar -->
+<body class="bg-background text-on-background font-sans min-h-screen pb-28 md:pb-6 md:pl-64 pt-20"
+    x-data="{ activeProperty: 'all', mobileMenuOpen: false }">
+    <!-- Overlay para o menu lateral em dispositivos móveis -->
     <div class="fixed inset-0 bg-black/50 z-50 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <!-- TopAppBar -->
     <header
-        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-on-surface-variant transition-colors duration-200">
+        class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface border-b border-outline-variant transition-colors duration-200">
         <button
-            class="md:hidden flex items-center justify-center p-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            class="md:hidden flex items-center justify-center p-3 text-primary hover:bg-surface-container-low rounded-full transition-colors duration-200"
             onclick="toggleSidebar()">
             <span class="material-symbols-outlined">menu</span>
         </button>
 
         <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-4">
-            <span
-                class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">AgroSync</span>
+            <span class="font-semibold text-headline-md text-primary tracking-tight">AgroSync</span>
         </div>
 
         <button onclick="window.location.reload()"
-            class="ml-auto flex items-center justify-center p-2 text-primary hover:scale-125 dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full transition-colors duration-200">
+            class="ml-auto flex items-center justify-center p-3 text-primary hover:scale-110 rounded-full transition-colors duration-200">
             <span class="material-symbols-outlined">cloud_sync</span>
         </button>
     </header>
-    <!-- NavigationDrawer / Sidebar -->
+
+    <!-- NavigationDrawer / Menu Lateral -->
     <aside
-        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container dark:bg-surface-container-highest border-r border-outline-variant dark:border-on-surface-variant"
+        class="sidebar-transition sidebar-closed fixed left-0 top-0 h-full w-64 z-[60] md:z-30 pt-20 pb-4 bg-surface-container border-r border-outline-variant"
         id="main-sidebar">
-        <!-- Close Button (Mobile Only) -->
+        <!-- Botão de Fechar (Apenas Mobile) -->
         <button class="absolute top-4 right-4 md:hidden p-2 text-on-surface-variant" onclick="toggleSidebar()">
             <span class="material-symbols-outlined">close</span>
         </button>
-        <!-- Profile Header -->
+        <!-- Cabeçalho do Perfil -->
         <div class="px-6 mb-6 flex items-center gap-3">
             <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
                 <img alt="Avatar" class="w-full h-full object-cover"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
             </div>
             <div class="overflow-hidden">
-                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">AgroSync Admin</p>
-                <p class="font-label-sm text-label-sm text-on-surface-variant truncate">Farm Manager</p>
+                <p class="font-label-md text-label-md text-on-surface truncate font-semibold">João Silva</p>
+
                 <div class="flex items-center gap-1 mt-0.5">
                     <div class="w-2 h-2 rounded-full bg-[#1b4332]"></div>
                     <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
@@ -106,50 +92,51 @@
         </div>
         <div class="mx-4 my-2 border-t border-outline-variant"></div>
         <nav class="flex-1 overflow-y-auto">
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Dashboard.html">
-                <span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">
-                    dashboard</span>
-                <span class="font-label-md text-label-md">Dashboard</span>
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-label-md font-medium">Dashboard</span>
             </a>
-            <a 
-            class="flex items-center gap-3 bg-primary text-on-primary dark:bg-primary-fixed dark:text-on-primary-fixed rounded-lg px-4 py-3 mx-2 cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
                 href="Culturas.html">
-                <span class="material-symbols-outlined">potted_plant</span>
-                <span class="font-label-md text-label-md">Culturas</span>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+                <span class="text-label-md font-semibold">Culturas</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Relatorios.html">
                 <span class="material-symbols-outlined">assessment</span>
-                <span class="font-label-md text-label-md">Relatórios</span>
+                <span class="text-label-md font-medium">Relatórios</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Compartilhamento.html">
                 <span class="material-symbols-outlined">share</span>
-                <span class="font-label-md text-label-md">Compartilhar</span>
+                <span class="text-label-md font-medium">Compartilhar</span>
             </a>
             <div class="mx-4 my-2 border-t border-outline-variant"></div>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Perfil.html">
                 <span class="material-symbols-outlined">account_circle</span>
-                <span class="font-label-md text-label-md">Perfil</span>
+                <span class="text-label-md font-medium">Perfil</span>
             </a>
-            <a class="flex items-center gap-3 text-on-surface-variant dark:text-on-surface hover:bg-surface-container-high dark:hover:bg-surface-dim transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
+            <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
                 href="Configurações.html">
                 <span class="material-symbols-outlined">settings</span>
-                <span class="font-label-md text-label-md">Configurações</span>
+                <span class="text-label-md font-medium">Configurações</span>
             </a>
         </nav>
     </aside>
-    <!-- BottomNavBar (Mobile) -->
-    <nav class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
+
+    <!-- BottomNavBar (Mobile) - Destacando "Culturas" de forma elegante -->
+    <nav
+        class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface dark:bg-background border-t border-outline-variant dark:border-on-surface-variant">
         <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Dashboard.html"><span class="material-symbols-outlined text-[24px] "
-                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
-                class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a><a
+            href="Dashboard.html">
+            <span class="material-symbols-outlined text-[24px] ">
+                dashboard</span><span class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a><a
             class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container dark:bg-primary-fixed dark:text-on-primary-fixed rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
-            href="Culturas.html"><span class="material-symbols-outlined text-[24px] ">potted_plant</span><span
-                class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
+            href="Culturas.html">
+            <span class="material-symbols-outlined text-[24px] " style="font-variation-settings: 'FILL' 1;">
+                potted_plant</span><span class="font-label-sm text-[10px] mt-0.5">Culturas</span></a><a
             class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
             href="Relatorios.html"><span class="material-symbols-outlined text-[24px] ">assessment</span><span
                 class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a><a
@@ -160,151 +147,421 @@
             href="Perfil.html"><span class="material-symbols-outlined text-[24px] ">person</span><span
                 class="font-label-sm text-[10px] mt-0.5">Perfil</span></a><a
             class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-1 hover:text-primary dark:hover:text-primary-fixed-dim scale-90 active:scale-85 transition-transform"
-            href="Configurações.html"><span class="material-symbols-outlined text-[24px] ">settings</span><span
-                class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
+            href="Configurações.html">
+            <span class="material-symbols-outlined text-[24px] ">
+                settings</span><span class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
     </nav>
+
     <!-- Main Content -->
-    <main class="pt-20 pb-10 md:pl-64 min-h-screen">
-        <div class="px-margin-mobile md:px-margin-desktop py-6 max-w-7xl mx-auto">
-            <!-- Page Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                <div>
-                    <h2
-                        class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
-                        Gestão de Culturas</h2>
-                    <p class="text-on-surface-variant mt-1">Visão geral das culturas ativas em plantio.</p>
-                </div>
-                <button onclick="window.location.href='NovaCultura.html'"
-                    class="bg-surface-tint text-on-primary hover:bg-primary px-6 py-3 rounded-lg font-label-md text-label-md flex items-center gap-2 transition-colors shadow-sm w-full md:w-auto justify-center">
-                    <span class="material-symbols-outlined" data-icon="add">add</span>
-                    Nova Cultura
+    <main class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto w-full">
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 class="text-headline-lg-mobile md:text-headline-lg text-on-surface font-bold">Gestão de Culturas
+                </h2>
+                <p class="text-on-surface-variant mt-1">Visão geral e monitoramento das culturas ativas em suas
+                    propriedades.</p>
+            </div>
+            <button onclick="window.location.href='NovaCultura.html'"
+                class="bg-primary text-on-primary hover:opacity-90 px-6 py-3 rounded-xl font-semibold text-label-md flex items-center gap-2 transition-all shadow-sm w-full md:w-auto justify-center active:scale-95">
+                <span class="material-symbols-outlined">add</span>
+                Nova Cultura
+            </button>
+        </div>
+
+        <!-- Filtros por Chips de Propriedade (Responsivo e intuitivo) -->
+        <div class="mb-6">
+            <span class="text-label-sm uppercase tracking-wider text-outline font-semibold block mb-2.5">Filtrar por
+                Propriedade:</span>
+            <div class="flex gap-2 overflow-x-auto pb-1.5 w-full">
+                <button @click="activeProperty = 'all'"
+                    :class="activeProperty === 'all' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                    Todas as Propriedades
+                </button>
+                <button @click="activeProperty = 'sao_joao'"
+                    :class="activeProperty === 'sao_joao' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                    Fazenda São João
+                </button>
+                <button @click="activeProperty = 'esperanca'"
+                    :class="activeProperty === 'esperanca' ? 'bg-primary text-on-primary border-primary' : 'bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-low'"
+                    class="px-4 py-2 text-label-sm font-semibold border rounded-xl transition-all whitespace-nowrap">
+                    Sítio Esperança
                 </button>
             </div>
-            <!-- Grid Content -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap">
-                <!-- Crop Card 1 -->
+        </div>
+
+        <!-- Conteúdo Principal Dinâmico por Grupo de Propriedade -->
+        <div class="space-y-8">
+
+            <!-- SEÇÃO: FAZENDA SÃO JOÃO -->
+            <section x-show="activeProperty === 'all' || activeProperty === 'sao_joao'" x-transition
+                class="bg-surface border border-outline-variant rounded-xl p-5 shadow-sm">
+                <!-- Cabeçalho da Propriedade -->
                 <div
-                    class="md:col-span-6 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
-                                <span class="material-symbols-outlined" data-icon="grass">grass</span>
-                            </div>
-                            <div>
-                                <h3 class="font-headline-md text-headline-md text-on-surface">Alface Crespa</h3>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Setor Leste - Lote C</p>
-                            </div>
+                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 pb-4 border-b border-outline-variant/50">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined">agriculture</span>
                         </div>
-                        <span
-                            class="bg-primary-fixed text-on-primary-fixed px-2 py-1 rounded-full font-label-sm text-label-sm">Saudável</span>
-                    </div>
-                    <div class="space-y-4">
                         <div>
-                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
-                                <span class="">Crescimento</span>
-                                <span class="">78%</span>
+                            <h3 class="text-headline-md font-bold text-on-surface">Fazenda São João Silva</h3>
+                            <span class="text-label-sm text-outline flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">location_on</span> Ribeirão Preto, SP
+                            </span>
+                        </div>
+                    </div>
+                    <span
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-label-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span> Operacional
+                    </span>
+                </div>
+
+                <!-- Grid de Culturas da Fazenda São João -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-bento-gap">
+
+                    <!-- Cultura 1: Alface Crespa -->
+                    <div id="crop-alface" x-data="{ menuOpen: false }"
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <div class="flex justify-between items-start gap-2 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined"
+                                            style="font-variation-settings: 'FILL' 1;">grass</span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <!-- O nome da cultura agora pode quebrar linha livremente e tem quase toda a largura para si -->
+                                        <h4
+                                            class="text-headline-md font-bold text-on-surface leading-tight break-words">
+                                            Alface Crespa</h4>
+                                        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                            <p class="text-label-sm text-on-surface-variant font-medium">Setor Leste -
+                                                Lote C</p>
+                                            <span
+                                                class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Saudável</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative shrink-0">
+                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false"
+                                        class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
+                                    <div x-show="menuOpen" x-cloak
+                                        class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20"
+                                        x-transition>
+                                        <ul class="py-1">
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; showTemporaryEditFeedback('Alface Crespa')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">edit</span> Editar
+                                                    Cultura
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; falselyDeleteCrop('crop-alface', 'Alface Crespa')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                                    Excluir
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="w-full bg-surface-variant rounded-full h-2">
-                                <div class="bg-surface-tint h-2 rounded-full" style="width: 78%"></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-label-sm text-on-surface mb-1 font-semibold">
+                                        <span>Ciclo de Crescimento</span>
+                                        <span>78%</span>
+                                    </div>
+                                    <div class="w-full bg-surface-variant rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full transition-all duration-500"
+                                            style="width: 78%"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
+                        <div class="grid grid-cols-2 gap-2 pt-3 mt-3 border-t border-outline-variant/30 text-label-sm">
                             <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
-                                <p class="font-body-md text-body-md text-on-surface">02/11/2023</p>
+                                <p class="text-on-surface-variant font-medium">Data de Plantio</p>
+                                <p class="font-bold text-on-surface mt-0.5">24/05/2026</p>
                             </div>
                             <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
-                                <p class="font-body-md text-body-md text-on-surface">15/12/2023</p>
+                                <p class="text-on-surface-variant font-medium">Previsão Colheita</p>
+                                <p class="font-bold text-on-surface mt-0.5">12/01/2027</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Cultura 2: Tomate -->
+                    <div id="crop-tomate" x-data
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[220px]">
+                        <div x-data="{ menuOpen: false }">
+                            <div class="flex justify-between items-start gap-2 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined">local_florist</span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <h4
+                                            class="text-headline-md font-bold text-on-surface leading-tight break-words">
+                                            Tomate Cereja</h4>
+                                        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                            <p class="text-label-sm text-on-surface-variant font-medium">Estufa
+                                                Principal - B</p>
+                                            <!-- <span
+                                                class="bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Ideal</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative shrink-0">
+                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false"
+                                        class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
+                                    <div x-show="menuOpen" x-cloak
+                                        class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20"
+                                        x-transition>
+                                        <ul class="py-1">
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; showTemporaryEditFeedback('Tomate Cereja')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">edit</span> Editar
+                                                    Cultura
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; falselyDeleteCrop('crop-tomate', 'Tomate Cereja')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                                    Excluir
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-label-sm text-on-surface mb-1 font-semibold">
+                                        <span>Ciclo de Crescimento</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="w-full bg-surface-variant rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full transition-all duration-500"
+                                            style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 mt-3 border-t border-outline-variant/30 text-label-sm">
+                            <div>
+                                <p class="text-on-surface-variant font-medium">Data de Plantio</p>
+                                <p class="font-bold text-on-surface mt-0.5">01/08/2023</p>
+                            </div>
+                            <div>
+                                <p class="text-on-surface-variant font-medium">Previsão Colheita</p>
+                                <p class="font-bold text-on-surface mt-0.5">05/11/2023</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <!-- Crop Card 2 -->
+            </section>
+
+            <!-- SEÇÃO: SÍTIO ESPERANÇA -->
+            <section x-show="activeProperty === 'all' || activeProperty === 'esperanca'" x-transition
+                class="bg-surface border border-outline-variant rounded-xl p-5 shadow-sm">
+                <!-- Cabeçalho da Propriedade -->
                 <div
-                    class="md:col-span-6 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
-                                <span class="material-symbols-outlined" data-icon="local_florist">local_florist</span>
-                            </div>
-                            <div>
-                                <h3 class="font-headline-md text-headline-md text-on-surface">Tomate</h3>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Estufa Principal</p>
-                            </div>
+                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 pb-4 border-b border-outline-variant/50">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined">home_work</span>
                         </div>
-                        <span
-                            class="bg-secondary-fixed text-on-secondary-fixed px-2 py-1 rounded-full font-label-sm text-label-sm">Ideal</span>
-                    </div>
-                    <div class="space-y-4">
                         <div>
-                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
-                                <span class="">Crescimento</span>
-                                <span class="">85%</span>
-                            </div>
-                            <div class="w-full bg-surface-variant rounded-full h-2">
-                                <div class="bg-secondary h-2 rounded-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
-                                <p class="font-body-md text-body-md text-on-surface">01/08/2023</p>
-                            </div>
-                            <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
-                                <p class="font-body-md text-body-md text-on-surface">05/11/2023</p>
-                            </div>
+                            <h3 class="text-headline-md font-bold text-on-surface">Sítio Esperança</h3>
+                            <span class="text-label-sm text-outline flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">location_on</span> Londrina, PR
+                            </span>
                         </div>
                     </div>
+                    <span
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-label-sm font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> Atenção
+                    </span>
                 </div>
-                <!-- Crop Card 3 -->
-                <div
-                    class="md:col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
-                                <span class="material-symbols-outlined"
-                                    data-icon="energy_savings_leaf">energy_savings_leaf</span>
-                            </div>
-                            <div>
-                                <h3 class="font-headline-md text-headline-md text-on-surface">Soja</h3>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Setor Sul - Lote B</p>
-                            </div>
-                        </div>
-                        <span
-                            class="bg-error-container text-on-error-container px-2 py-1 rounded-full font-label-sm text-label-sm">Alerta</span>
-                    </div>
-                    <div class="space-y-4">
+
+                <!-- Grid de Culturas do Sítio Esperança -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-bento-gap">
+
+                    <!-- Cultura 3: Soja -->
+                    <div id="crop-soja" x-data="{ menuOpen: false }"
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[220px]">
                         <div>
-                            <div class="flex justify-between font-label-sm text-label-sm text-on-surface mb-1">
-                                <span class="">Crescimento</span>
-                                <span class="">30%</span>
+                            <div class="flex justify-between items-start gap-2 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined">energy_savings_leaf</span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <h4
+                                            class="text-headline-md font-bold text-on-surface leading-tight break-words">
+                                            Soja</h4>
+                                        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                            <p class="text-label-sm text-on-surface-variant font-medium">Setor Sul -
+                                                Lote B</p>
+                                            <span
+                                                class="bg-error-container text-error px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Alerta</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative shrink-0">
+                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false"
+                                        class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
+                                    <div x-show="menuOpen" x-cloak
+                                        class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20"
+                                        x-transition>
+                                        <ul class="py-1">
+                                            <li>
+                                                <button @click="menuOpen = false; showTemporaryEditFeedback('Soja')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">edit</span> Editar
+                                                    Cultura
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; falselyDeleteCrop('crop-soja', 'Soja')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                                    Excluir
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="w-full bg-surface-variant rounded-full h-2">
-                                <div class="bg-error h-2 rounded-full" style="width: 30%"></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-label-sm text-on-surface mb-1 font-semibold">
+                                        <span>Ciclo de Crescimento</span>
+                                        <span>20%</span>
+                                    </div>
+                                    <div class="w-full bg-surface-variant rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full transition-all duration-500"
+                                            style="width: 20%"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4 pt-2 border-t border-surface-variant">
+                        <div class="grid grid-cols-2 gap-2 pt-3 mt-3 border-t border-outline-variant/30 text-label-sm">
                             <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Data de Plantio</p>
-                                <p class="font-body-md text-body-md text-on-surface">10/10/2023</p>
+                                <p class="text-on-surface-variant font-medium">Data de Plantio</p>
+                                <p class="font-bold text-on-surface mt-0.5">10/07/2026</p>
                             </div>
                             <div>
-                                <p class="font-label-sm text-label-sm text-on-surface-variant">Previsão Colheita</p>
-                                <p class="font-body-md text-body-md text-on-surface">15/03/2024</p>
+                                <p class="text-on-surface-variant font-medium">Previsão Colheita</p>
+                                <p class="font-bold text-on-surface mt-0.5">15/03/2027</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Cultura 4: Milho Híbrido -->
+                    <div id="crop-milho" x-data="{ menuOpen: false }"
+                        class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[220px]">
+                        <div>
+                            <div class="flex justify-between items-start gap-2 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined">potted_plant</span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <h4
+                                            class="text-headline-md font-bold text-on-surface leading-tight break-words">
+                                            Milho Híbrido</h4>
+                                        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                            <p class="text-label-sm text-on-surface-variant font-medium">Setor Norte -
+                                                Lote A</p>
+                                            <!-- <span
+                                                class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">Saudável</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative shrink-0">
+                                    <button @click="menuOpen = !menuOpen" @click.away="menuOpen = false"
+                                        class="material-symbols-outlined text-outline hover:text-on-surface p-1.5 rounded-full hover:bg-surface-container transition-colors">more_vert</button>
+                                    <div x-show="menuOpen" x-cloak
+                                        class="absolute right-0 top-full mt-1 w-44 bg-surface border border-outline-variant rounded-xl shadow-lg z-20"
+                                        x-transition>
+                                        <ul class="py-1">
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; showTemporaryEditFeedback('Milho Híbrido')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-surface-container text-on-surface text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">edit</span> Editar
+                                                    Cultura
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    @click="menuOpen = false; falselyDeleteCrop('crop-milho', 'Milho Híbrido')"
+                                                    class="w-full text-left px-4 py-2.5 hover:bg-error-container text-error text-label-sm flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-sm">delete</span>
+                                                    Excluir
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-label-sm text-on-surface mb-1 font-semibold">
+                                        <span>Ciclo de Crescimento</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="w-full bg-surface-variant rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full transition-all duration-500"
+                                            style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 mt-3 border-t border-outline-variant/30 text-label-sm">
+                            <div>
+                                <p class="text-on-surface-variant font-medium">Data de Plantio</p>
+                                <p class="font-bold text-on-surface mt-0.5">25/09/2023</p>
+                            </div>
+                            <div>
+                                <p class="text-on-surface-variant font-medium">Previsão Colheita</p>
+                                <p class="font-bold text-on-surface mt-0.5">18/02/2024</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            </section>
+
         </div>
     </main>
 
+    <!-- Container das notificações Toast (Espaçamento inteligente e responsivo) -->
+    <div id="toast-container"
+        class="fixed bottom-24 md:bottom-6 right-0 left-0 md:left-auto md:right-6 z-[100] flex flex-col items-center md:items-end gap-2 px-4 pointer-events-none w-full md:w-auto">
+    </div>
+
     <script>
+        // Função do Sidebar lateral para mobile
         function toggleSidebar() {
             const sidebar = document.getElementById('main-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -319,6 +576,107 @@
                 overlay.classList.add('hidden');
                 document.body.classList.remove('overflow-hidden');
             }
+        }
+
+        // Função para feedback de clique em Editar (sem ação real ainda)
+        function showTemporaryEditFeedback(cropName) {
+            showCropInteractiveToast(`Edição da cultura "${cropName}" iniciada de forma simulada.`, null);
+        }
+
+        // Função Premium para exclusão simulada de Culturas com animação fluida (apenas removendo o card)
+        function falselyDeleteCrop(cardId, cropName) {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+
+            // Transição visual de saída suave
+            card.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+
+            setTimeout(() => {
+                card.classList.add('hidden');
+
+                // Exibe apenas a notificação premium integrada ao tema claro/verde da aplicação
+                showCropInteractiveToast(`A cultura "${cropName}" foi removida do lote.`, () => {
+                    undoCropDelete(cardId);
+                });
+            }, 250);
+        }
+
+        // Função para desfazer a exclusão e restaurar o card original sem depender de placeholder
+        function undoCropDelete(cardId) {
+            const card = document.getElementById(cardId);
+
+            if (card) {
+                card.classList.remove('hidden');
+                setTimeout(() => {
+                    card.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                }, 50);
+            }
+        }
+
+        // Criador Dinâmico de Toasts padrão premium (Fundo Branco, bordas suaves no verde padrão)
+        function showCropInteractiveToast(message, undoCallback) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            // Formato de largura inteligente para mobile evitando que o conteúdo quebre ou esmague
+            toast.className = "pointer-events-auto flex flex-col gap-3 bg-surface-container-lowest text-on-surface p-4 rounded-xl shadow-xl transform translate-y-4 opacity-0 transition-all duration-300 w-[calc(100%-32px)] mx-4 md:mx-0 md:w-full md:max-w-sm border-2 border-primary/20";
+
+            // Estrutura premium em branco e verde com botão "Desfazer" e "Cadastrar"
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <span class="material-symbols-outlined text-emerald-600 text-2xl leading-none">check_circle</span>
+                    <span class="text-label-sm font-semibold text-primary leading-tight">${message}</span>
+                </div>
+                <div class="flex justify-end gap-2 border-t border-outline-variant/30 pt-2.5 mt-1">
+                    ${undoCallback ? `
+                    <button class="text-outline hover:text-on-surface text-label-sm font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors" id="toast-undo-crop-action">
+                        Desfazer
+                    </button>
+                    ` : ''}
+                    <a href="NovaCultura.html" class="bg-primary text-on-primary hover:opacity-90 text-label-sm font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-lg transition-all flex items-center gap-1 shadow-sm">
+                        <span class="material-symbols-outlined text-sm">add</span> Nova Cultura
+                    </a>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            // Animação de Entrada
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 50);
+
+            let clickHandled = false;
+
+            // Atribui o evento de desfazer exclusão
+            if (undoCallback) {
+                const undoButton = toast.querySelector('#toast-undo-crop-action');
+                undoButton.addEventListener('click', () => {
+                    clickHandled = true;
+                    undoCallback();
+                    dismissCropToast(toast);
+                });
+            }
+
+            // Auto dismiss após 8 segundos
+            setTimeout(() => {
+                if (!clickHandled) {
+                    dismissCropToast(toast);
+                }
+            }, 8000);
+        }
+
+        // Auxiliar para fechar a notificação toast com efeito fade
+        function dismissCropToast(toast) {
+            toast.classList.add('translate-y-4', 'opacity-0');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
         }
     </script>
 </body>

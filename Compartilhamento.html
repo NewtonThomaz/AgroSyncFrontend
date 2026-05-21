@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>AgroSync - Gestão de Compartilhamento</title>
-
+    <script src="tailwind-config.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
         rel="stylesheet" />
@@ -14,60 +14,9 @@
         rel="stylesheet" />
 
     <!-- Alpine.js para controle reativo total de estado -->
+    <script src="tailwind-config.js" onerror="console.warn('Usando configuração de fallback integrada.')"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1b4332',
-                        'on-primary': '#ffffff',
-                        'primary-container': '#d8f3dc',
-                        'on-primary-container': '#081c15',
-                        'primary-fixed': '#d8f3dc',
-                        'primary-fixed-dim': '#95d5b2',
-                        'on-primary-fixed-variant': '#1b4332',
-                        secondary: '#40916c',
-                        'on-secondary': '#ffffff',
-                        'secondary-container': '#d8f3dc',
-                        'on-secondary-container': '#1b4332',
-                        surface: '#fcfdf9',
-                        'on-surface': '#1a1c1a',
-                        'surface-container': '#f0f1eb',
-                        'surface-container-low': '#f5f6f0',
-                        'surface-container-lowest': '#ffffff',
-                        'surface-container-highest': '#e1e3dc',
-                        'surface-variant': '#dfe4dd',
-                        'on-surface-variant': '#434844',
-                        'surface-dim': '#dadbd4',
-                        outline: '#737974',
-                        'outline-variant': '#c3c8c2',
-                        background: '#f9f9f6',
-                        'on-background': '#1a1c1a',
-                        error: '#ba1a1a',
-                        'error-container': '#ffdad6',
-                        'on-error-container': '#410002',
-                        'tertiary-fixed': '#e2f0d9',
-                        'tertiary': '#52634f'
-                    },
-                    spacing: {
-                        'margin-mobile': '1rem',
-                        'margin-desktop': '2rem',
-                        'bento-gap': '1.5rem',
-                    },
-                    fontSize: {
-                        'headline-lg': ['2rem', '2.5rem'],
-                        'headline-lg-mobile': ['1.75rem', '2.25rem'],
-                        'headline-md': ['1.5rem', '2rem'],
-                        'body-md': ['0.875rem', '1.25rem'],
-                        'label-md': ['0.875rem', '1.25rem'],
-                        'label-sm': ['0.75rem', '1rem'],
-                    }
-                }
-            }
-        }
-    </script>
 
     <style type="text/tailwindcss">
         @layer utilities {
@@ -150,50 +99,51 @@
             <span class="material-symbols-outlined">close</span>
         </button>
         <!-- Profile Header -->
-        <div class="px-6 mb-6 flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
+        <!-- Profile Header -->
+        <header class="px-6 mb-6 flex items-center gap-3">
+            <figure
+                class="w-12 h-12 rounded-full bg-surface-dim overflow-hidden border border-outline-variant shrink-0">
                 <img alt="Avatar" class="w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY"
-                    onerror="this.src='https://placehold.co/100x100/1b4332/ffffff?text=JS'">
-            </div>
-            <div class="overflow-hidden">
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp-Km4GELsv8GECgwdbHU0-vvnnctrTZMEN_6C9Cg05ShVvE_QWBpBTv8Htn_I3Y7eY-Wcep1bQHXZYbTLC8EblXOMXmbck0ilxtiLQ6K5Rs9sknNGXKCXpRqs5EV71anh-MEbLo-74uUHp4ghCIFeVZGydWkonW8s_OfDcdAoEMrHiez9irxJcwbjmxSbMLkHHeIPa0FXZzxbnM2srbDdgz96rfMvBjrQPbq1YEW-8abCwoB5QWnpzx32lFTQ1LSVK-FEyZ479lY">
+            </figure>
+            <section class="overflow-hidden">
                 <p class="font-label-md text-label-md text-on-surface truncate font-semibold">João Silva</p>
-                <div class="flex items-center gap-1 mt-0.5">
-                    <div class="w-2 h-2 rounded-full bg-emerald-700"></div>
+                <span class="flex items-center gap-1 mt-0.5">
+                    <span class="w-2 h-2 rounded-full bg-[#1b4332]"></span>
                     <span class="font-label-sm text-label-sm text-outline text-[10px]">Online</span>
-                </div>
-            </div>
-        </div>
-        <div class="mx-4 my-2 border-t border-outline-variant"></div>
+                </span>
+            </section>
+        </header>
+        <hr class="mx-4 my-2 border-t border-outline-variant">
         <nav class="flex-1 overflow-y-auto">
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-xl cursor-pointer active:opacity-80"
-                href="#Dashboard">
+                href="Dashboard.html">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="text-label-md font-medium">Dashboard</span>
             </a>
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="#Culturas">
+                href="Culturas.html">
                 <span class="material-symbols-outlined">potted_plant</span>
                 <span class="font-label-md text-label-md">Culturas</span>
             </a>
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="#Relatorios">
+                href="Relatorios.html">
                 <span class="material-symbols-outlined">assessment</span>
                 <span class="font-label-md text-label-md">Relatórios</span>
             </a>
             <a class="flex items-center gap-3 bg-primary text-on-primary rounded-xl px-4 py-3 mx-2 cursor-pointer active:opacity-80"
-                href="#Compartilhamento">
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0.8;">share</span>
-                <span class="font-label-md text-label-md">Compartilhar</span>
+                href="Compartilhamento.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">share</span>
+                <span class="font-label-md text-label-md font-semibold">Compartilhar</span>
             </a>
-            <div class="mx-4 my-2 border-t border-outline-variant"></div>
+            <hr class="mx-4 my-2 border-t border-outline-variant">
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="#Perfil">
+                href="Perfil.html">
                 <span class="material-symbols-outlined">account_circle</span>
                 <span class="font-label-md text-label-md">Perfil</span>
             </a>
             <a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-container-high transition-colors px-4 py-3 mx-2 rounded-lg cursor-pointer active:opacity-80"
-                href="#Configuracoes">
+                href="Configurações.html">
                 <span class="material-symbols-outlined">settings</span>
                 <span class="font-label-md text-label-md">Configurações</span>
             </a>
@@ -203,23 +153,23 @@
     <nav
         class="fixed bottom-0 w-full z-40 flex justify-around items-center h-[72px] pb-safe px-4 md:hidden bg-surface border-t border-outline-variant">
         <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
-            href="#Dashboard"><span class="material-symbols-outlined text-[24px]"
-                style="font-variation-settings: 'FILL' 1;">dashboard</span><span
+            href="Dashboard.html"><span class="material-symbols-outlined text-[24px]">dashboard</span><span
                 class="font-label-sm text-[10px] mt-0.5">Dashboard</span></a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
-            href="#Culturas"><span class="material-symbols-outlined text-[24px]">potted_plant</span><span
+            href="Culturas.html"><span class="material-symbols-outlined text-[24px]">potted_plant</span><span
                 class="font-label-sm text-[10px] mt-0.5">Culturas</span></a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
-            href="#Relatorios"><span class="material-symbols-outlined text-[24px]">assessment</span><span
+            href="Relatorios.html"><span class="material-symbols-outlined text-[24px]">assessment</span><span
                 class="font-label-sm text-[10px] mt-0.5">Relatórios</span></a>
         <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-2 py-1 scale-90 active:scale-85 transition-transform"
-            href="#Compartilhamento"><span class="material-symbols-outlined text-[24px]">share</span><span
-                class="font-label-sm text-[10px] mt-0.5">Compartilhar</span></a>
+            href="Compartilhamento.html"><span class="material-symbols-outlined text-[24px]"
+                style="font-variation-settings: 'FILL' 1;">share</span><span
+                class="font-label-sm text-[10px] mt-0.5 font-semibold">Compartilhar</span></a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
-            href="#Perfil"><span class="material-symbols-outlined text-[24px]">person</span><span
+            href="Perfil.html"><span class="material-symbols-outlined text-[24px]">person</span><span
                 class="font-label-sm text-[10px] mt-0.5">Perfil</span></a>
         <a class="flex flex-col items-center justify-center text-on-surface-variant p-1 hover:text-primary scale-90 active:scale-85 transition-transform"
-            href="#Configuracoes"><span class="material-symbols-outlined text-[24px]">settings</span><span
+            href="Configurações.html"><span class="material-symbols-outlined text-[24px]">settings</span><span
                 class="font-label-sm text-[10px] mt-0.5">Configurações</span></a>
     </nav>
 
